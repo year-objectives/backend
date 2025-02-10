@@ -1,0 +1,33 @@
+services:
+  localstack:
+    image: localstack/localstack:3.0.1
+    environment:
+      - SERVICES=dynamodb
+      - AWS_REGION=eu-central-1
+    ports:
+      - 4566:4566
+    networks:
+      - objective-backend
+  aws_local:
+    image: amazon/aws-cli
+    depends_on:
+      - localstack
+    restart: "no"
+    environment:
+      - AWS_ACCESS_KEY_ID=test-key
+      - AWS_SECRET_ACCESS_KEY=test-secret
+      - AWS_DEFAULT_REGION=eu-central-1
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        aws dynamodb create-table --endpoint-url=http://localstack:4566 --table-name objectives --key-schema AttributeName=id,KeyType=HASH --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
+        sleep 5s
+        aws dynamodb put-item --table-name objectives --item '{"id":{"S":"123"}, "name":{"S":"mah"}}' --endpoint-url=http://localstack:4566
+        aws dynamodb put-item --table-name objectives --item '{"id":{"S":"456"}, "name":{"S":"lila"}}' --endpoint-url=http://localstack:4566
+        aws dynamodb put-item --table-name objectives --item '{"id":{"S":"789"}, "name":{"S":"helio"}}' --endpoint-url=http://localstack:4566
+    networks:
+      - objective-backend
+networks:
+  objective-backend:
+    name: objective-backend

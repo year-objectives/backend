@@ -42,16 +42,12 @@
             <artifactId>quarkus-amazon-dynamodb-enhanced</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-keycloak-authorization</artifactId>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>url-connection-client</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-openapi</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-oidc</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -63,19 +59,11 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-jwt</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-health</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-metrics</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-jwt-build</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>

@@ -3,7 +3,7 @@ package org.yearobjectives;
 import jakarta.ws.rs.ApplicationPath;
 import org.yearobjectives.AppUtils.Paths;
 import org.yearobjectives.AppUtils.ResponseDto;
-import org.yearobjectives.api.dto.ObjectiveDTO;
+import org.yearobjectives.api.dto.ObjectiveDto;
 
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.MediaType;
@@ -42,7 +42,7 @@ import org.eclipse.microprofile.openapi.annotations.servers.Server;
                                 name = ResponseDto.OBJECTIVE_LIST,
                                 description = "List of objectives success response.",
                                 content = @Content(mediaType = MediaType.APPLICATION_JSON,
-                                        schema = @Schema(type= SchemaType.ARRAY, implementation = ObjectiveDTO.class)))
+                                        schema = @Schema(type= SchemaType.ARRAY, implementation = ObjectiveDto.class)))
                 }
         )
 )

@@ -2,7 +2,7 @@ package org.yearobjectives.domain.service;
 
 import java.util.List;
 
-import org.yearobjectives.api.dto.ObjectiveDTO;
+import org.yearobjectives.api.dto.ObjectiveDto;
 import org.yearobjectives.domain.assembler.api.ObjectiveApiAssembler;
 import org.yearobjectives.domain.assembler.infrastructure.ObjectiveInfraAssembler;
 import org.yearobjectives.infrastructure.client.dynamodb.ObjectivesClient;
@@ -22,7 +22,7 @@ public class ObjectiveService {
     @Inject
     private ObjectiveInfraAssembler objectiveInfraAssembler;
 
-    public List<ObjectiveDTO> getAllObjectives() {
+    public List<ObjectiveDto> getAllObjectives() {
         return objectiveApiAssembler.fromDomain(objectiveInfraAssembler.fromEntity(objectivesClient.findAll()));
     }
 }

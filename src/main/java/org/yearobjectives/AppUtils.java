@@ -75,6 +75,8 @@ public final class AppUtils {
 
         public static final String OBJECTIVE = "ObjectiveResponse";
 
+        public static final String OBJECTIVE_MERKER = "ObjectiveMarkerResponse";
+
         public static final String OBJECTIVE_LIST = "ObjectiveListResponse";
 
 
@@ -85,19 +87,35 @@ public final class AppUtils {
         public static final class Examples {
 
             public static final String OBJECTIVE = """
+                    {
+                        "id":"ff84904c-cb4f-4832-ba31-b6ef27bcad62",
+                        "type":"WEEKLY",
+                        "reversible":true,
+                        "cells": [
                             {
-                "id":"1",
-                "name":"maria",
-                "timestamp":12345
-            }
-                            """;
+                                "done":true,
+                                "concluded_at":12345
+                            }
+                        ]
+
+                        @JsonProperty UUID id, @JsonProperty ObjectiveType type, @JsonProperty Boolean reversible, 
+                           @JsonProperty("cells") List<ObjectiveMarkerDto> objectiveMarkers
+                    }
+                """;
+
+            public static final String OBJECTIVE_MARKER = """
+                    {
+                        "done":true,
+                        "concluded_at":12345
+                    }
+                """;
 
             private Examples() {}
         }
 
         private ResponseDto(){}
     }
-        /**
+    /**
      * Misc- util.
      */
     public static final class Misc {

@@ -5,6 +5,10 @@ import org.yearobjectives.AppUtils.ResponseDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+import java.util.List;
+import java.util.UUID;
+
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 
 @Schema(name = ResponseDto.OBJECTIVE,
@@ -12,6 +16,8 @@ import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
         type = SchemaType.OBJECT,
         readOnly = true,
         example = ResponseDto.Examples.OBJECTIVE)
-public record ObjectiveDTO(@JsonProperty String id, @JsonProperty String name, @JsonProperty long timestamp) {
-    
+public record ObjectiveDto(@JsonProperty UUID id, @JsonProperty ObjectiveTypeDto type, @JsonProperty Boolean reversible, 
+                           @JsonProperty("cells") List<ObjectiveMarkerDto> objectiveMarkers) {
+            
 }
+

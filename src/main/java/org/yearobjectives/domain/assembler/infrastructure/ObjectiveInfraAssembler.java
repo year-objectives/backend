@@ -1,6 +1,5 @@
 package org.yearobjectives.domain.assembler.infrastructure;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,7 +20,7 @@ public class ObjectiveInfraAssembler {
     }
 
     public Objective fromEntity(final DynamoObjectives objective) {
-        return Optional.ofNullable(objective).map(obj -> new Objective(obj.getId(), Instant.now(), obj.getName())).orElse(null);
+        return null;
     }
 
 }

@@ -1,7 +1,7 @@
 package org.yearobjectives.api.resources;
 
 import org.yearobjectives.AppUtils.Misc;
-import org.yearobjectives.api.dto.ObjectiveDTO;
+import org.yearobjectives.api.dto.ObjectiveDto;
 import org.yearobjectives.api.resources.utils.ResponseHelper;
 
 import jakarta.inject.Inject;
@@ -25,7 +25,7 @@ public class ObjectiveResourcesImpl implements ObjectiveResources {
     @Timed(description = "Get all objectives", absolute = true,
     name = Misc.METRICS_PREFIX + "getMicroservicesScenarios")
     public Response getAll() {
-        final List<ObjectiveDTO> objectives = objectivesService.getAllObjectives();
+        final List<ObjectiveDto> objectives = objectivesService.getAllObjectives();
         return responseHelper.buildFromList(objectives).build();
     }
 }

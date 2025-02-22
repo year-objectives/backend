@@ -1,15 +1,13 @@
 package org.yearobjectives.api.resources;
 
-import org.yearobjectives.AppUtils.Misc;
 import org.yearobjectives.api.dto.ObjectiveDto;
+import org.yearobjectives.api.dto.ObjectiveInputDto;
 import org.yearobjectives.api.resources.utils.ResponseHelper;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 
-import java.util.List;
-
-import org.eclipse.microprofile.metrics.annotation.Timed;
+import java.net.URI;
 import org.yearobjectives.domain.service.ObjectiveService;
 
 public class ObjectiveResourcesImpl implements ObjectiveResources {
@@ -20,12 +18,16 @@ public class ObjectiveResourcesImpl implements ObjectiveResources {
     @Inject
     private ResponseHelper responseHelper;
 
+    @Override
+    public Response createObjective(String user, ObjectiveInputDto objectiveInputDto) {
+        final ObjectiveDto objectiveDto = objectivesService.createObjective(objectiveInputDto);
+        return Response.created(URI.create(objectiveDto.id().toString())).entity(objectiveDto).build();
+    }
 
     @Override
-    @Timed(description = "Get all objectives", absolute = true,
-    name = Misc.METRICS_PREFIX + "getMicroservicesScenarios")
-    public Response getAll() {
-        final List<ObjectiveDto> objectives = objectivesService.getAllObjectives();
-        return responseHelper.buildFromList(objectives).build();
+    public Response getById(final String id) {
+        final ObjectiveDto objectiveDto = objectivesService.getById(id);
+        return responseHelper.build(objectiveDto).build();
     }
+
 }

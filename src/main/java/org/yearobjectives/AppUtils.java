@@ -22,6 +22,8 @@ public final class AppUtils {
              */
             public static final String OBJECTIVES = API_VERSION_1 + "/objectives";
 
+            public static final String OBJECTIVE_ID = "/{"+ Parameters.OBJECTIVE_ID +"}";
+
         private Paths(){}
     }
     /**
@@ -30,6 +32,8 @@ public final class AppUtils {
     public static final class Headers {
 
         private Headers(){}
+
+        public static final String USER = "x-user";
     }
     /**
      * Parameters util.
@@ -37,6 +41,8 @@ public final class AppUtils {
     public static final class Parameters {
 
         private Parameters(){}
+
+        public static final String OBJECTIVE_ID = "objectiveId";
     }
 
     /**
@@ -62,8 +68,12 @@ public final class AppUtils {
 
 
             public static final String OBJECTIVE = """
-                            
-                            """;
+                    {
+                        "type":"WEEKLY",
+                        "reversible":true,
+                        "cell_amount":4
+                    }
+                """;
 
             private Examples() {}
         }
@@ -79,6 +89,9 @@ public final class AppUtils {
 
         public static final String OBJECTIVE_LIST = "ObjectiveListResponse";
 
+        public static final String BAD_REQUEST = "BadRequestResponse";
+        
+        public static final String NO_CONTENT = "NoContentResponse";
 
 
         /**
@@ -97,9 +110,6 @@ public final class AppUtils {
                                 "concluded_at":12345
                             }
                         ]
-
-                        @JsonProperty UUID id, @JsonProperty ObjectiveType type, @JsonProperty Boolean reversible, 
-                           @JsonProperty("cells") List<ObjectiveMarkerDto> objectiveMarkers
                     }
                 """;
 

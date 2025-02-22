@@ -2,7 +2,9 @@ package org.yearobjectives.api.dto;
 
 import org.yearobjectives.AppUtils.ResponseDto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
@@ -16,6 +18,7 @@ import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
         type = SchemaType.OBJECT,
         readOnly = true,
         example = ResponseDto.Examples.OBJECTIVE)
+@JsonInclude(Include.NON_EMPTY)
 public record ObjectiveDto(@JsonProperty UUID id, @JsonProperty ObjectiveTypeDto type, @JsonProperty Boolean reversible, 
                            @JsonProperty("cells") List<ObjectiveMarkerDto> objectiveMarkers) {
             

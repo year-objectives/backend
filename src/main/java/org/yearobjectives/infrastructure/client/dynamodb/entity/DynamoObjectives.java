@@ -1,5 +1,7 @@
 package org.yearobjectives.infrastructure.client.dynamodb.entity;
 
+import java.util.List;
+
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
@@ -11,10 +13,18 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 public class DynamoObjectives {
 
     private static final String ID_COLUMN = "id";
-    private static final String NAME_COLUMN = "name";
+    private static final String TYPE_COLUMN = "type";
+    private static final String REVERSIBLE_COLUMN = "reversible";
+    private static final String CELL_AMOUNT_COLUMN = "cell_amount";
+    private static final String CREATED_AT_COLUMN = "created_at";
+    private static final String USER_COLUMN = "user";
 
     private String id;
-    private String name;
+    private String type;
+    private Boolean reversible;
+    private Integer cellAmount;
+    private Long createdAt;
+    private String user;
 
     @DynamoDbPartitionKey
     @DynamoDbAttribute(ID_COLUMN)
@@ -22,49 +32,64 @@ public class DynamoObjectives {
         return id;
     }
 
-    @DynamoDbAttribute(NAME_COLUMN)
-    public String getName() {
-        return name;
-    }
-
     public void setId(String id) {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @DynamoDbAttribute(TYPE_COLUMN)
+    public String getType() {
+        return type;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        DynamoObjectives other = (DynamoObjectives) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        return true;
+    @DynamoDbAttribute(REVERSIBLE_COLUMN)
+    public Boolean getReversible() {
+        return reversible;
     }
 
+    public void setReversible(Boolean reversible) {
+        this.reversible = reversible;
+    }
+
+    // public List<DynamoMarker> getMarkers() {
+    //     return markers;
+    // }
+
+    // public void setMarkers(List<DynamoMarker> markers) {
+    //     this.markers = markers;
+    // }
+
+    @DynamoDbAttribute(CELL_AMOUNT_COLUMN)
+    public Integer getCellAmount() {
+        return cellAmount;
+    }
+
+    public void setCellAmount(Integer cellAmount) {
+        this.cellAmount = cellAmount;
+    }
+
+    @DynamoDbAttribute(CREATED_AT_COLUMN)
+    public Long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Long startAt) {
+        this.createdAt = startAt;
+    }
+
+    @DynamoDbAttribute(USER_COLUMN)
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+        
+    // public record DynamoMarker(Boolean done, long concludedAt) {
+    // }
     
 }

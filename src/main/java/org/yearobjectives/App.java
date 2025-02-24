@@ -44,6 +44,13 @@ import org.eclipse.microprofile.openapi.annotations.servers.Server;
                                 required = true,
                                 schema = @Schema(type = SchemaType.STRING)),
                         @Parameter(
+                                name = Parameters.ENTRY_ID,
+                                description = Parameters.ENTRY_ID,
+                                in = ParameterIn.PATH,
+                                example = "73cd881e-56c9-4465-903b-06b13392d300",
+                                required = true,
+                                schema = @Schema(type = SchemaType.STRING)),
+                        @Parameter(
                                 name = Headers.USER,
                                 description = Headers.USER,
                                 in = ParameterIn.HEADER,

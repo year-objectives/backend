@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(name = ResponseDto.OBJECTIVE_MERKER,
         description = "Objective marker response object",
         type = SchemaType.OBJECT,
-        readOnly = true,
         example = ResponseDto.Examples.OBJECTIVE_MARKER)
 public record ObjectiveMarkerDto(@JsonProperty Boolean done, @JsonProperty("concluded_at") long concludedAt) {
     

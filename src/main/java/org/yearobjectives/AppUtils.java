@@ -10,19 +10,20 @@ public final class AppUtils {
      * Paths util.
      */
     public static final class Paths {
-            /**
+        /**
              * Api base path.
              */
             protected static final String ROOT_PATH = "/api";
-            
+
             private static final String API_VERSION_1 = "/v1";
-            
+
             /**
              * Objectives path.
              */
             public static final String OBJECTIVES = API_VERSION_1 + "/objectives";
 
             public static final String OBJECTIVE_ID = "/{"+ Parameters.OBJECTIVE_ID +"}";
+            public static final String ENTRY_ID = "/entries/{"+ Parameters.ENTRY_ID +"}";
 
         private Paths(){}
     }
@@ -43,6 +44,8 @@ public final class AppUtils {
         private Parameters(){}
 
         public static final String OBJECTIVE_ID = "objectiveId";
+
+        public static final String ENTRY_ID = "entryId";
     }
 
     /**

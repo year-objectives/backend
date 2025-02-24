@@ -22,6 +22,7 @@ services:
       - -c
       - |
         aws dynamodb create-table --endpoint-url=http://localstack:4566 --table-name objectives --key-schema AttributeName=id,KeyType=HASH --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
+        aws dynamodb create-table --endpoint-url=http://localstack:4566 --table-name objectives-done --key-schema AttributeName=id,KeyType=HASH --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
         sleep 5s
     networks:
       - objective-backend

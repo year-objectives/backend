@@ -2,13 +2,16 @@ package org.yearobjectives.domain.assembler.infrastructure;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.yearobjectives.domain.entity.MarkerType;
 import org.yearobjectives.domain.entity.Objective;
 import org.yearobjectives.domain.entity.Objective.Marker;
 import org.yearobjectives.infrastructure.client.dynamodb.entity.DynamoObjectives;
+import org.yearobjectives.infrastructure.client.dynamodb.entity.DynamoObjectivesDone;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -34,26 +37,32 @@ public class ObjectiveInfraAssembler {
 
     private DynamoObjectives convertAfterValidation(Objective objective) {
         final DynamoObjectives dynamoObjectives = new DynamoObjectives();
-        // final List<DynamoMarker> markes = Optional.ofNullable(objective.objectiveMarkers())
-        // .map(markers -> markers.stream().map(this::fromDomain).toList()).orElse(null);
         dynamoObjectives.setId(objective.id().toString());
         dynamoObjectives.setType(objective.type().name());
         dynamoObjectives.setCellAmount(objective.cellAmount());
         dynamoObjectives.setReversible(objective.reversible());
         dynamoObjectives.setCreatedAt(objective.startAt().getEpochSecond());
         dynamoObjectives.setUser(objective.user());
-        // dynamoObjectives.setMarkers(markes);
         return dynamoObjectives;
     }
 
     public Objective fromInfra(DynamoObjectives dynamoObjective) {
-        return new Objective(UUID.fromString(dynamoObjective.getId()), Objective.Type.valueOf(dynamoObjective.getType()), dynamoObjective.getReversible(), null, dynamoObjective.getCellAmount(), Instant.ofEpochSecond(dynamoObjective.getCreatedAt()), dynamoObjective.getUser());
+        return Optional.ofNullable(dynamoObjective)
+        .map(obj -> new Objective(UUID.fromString(obj.getId()), MarkerType.valueOf(obj.getType()), obj.getReversible(), null, obj.getCellAmount(), Instant.ofEpochSecond(obj.getCreatedAt()), obj.getUser()))
+        .orElse(null);
     }
 
-    // private DynamoMarker fromDomain(final Marker marker) {
-    //     return Optional.ofNullable(marker)
-    //     .map(mkr -> new DynamoMarker(mkr.done(), mkr.concludedAt())) 
-    //     .orElse(null);
-    // }
+    public DynamoObjectivesDone fromDomain(Marker fromApi) {
+        DynamoObjectivesDone dynamoObjectiveDone = null;
+        if(Objects.nonNull(fromApi)) {
+            dynamoObjectiveDone = new DynamoObjectivesDone();
+            dynamoObjectiveDone.setEndsAt(fromApi.endsAt().getEpochSecond());
+            dynamoObjectiveDone.setstartsAt(fromApi.startsAt().getEpochSecond());
+            dynamoObjectiveDone.setId(UUID.randomUUID().toString());
+            dynamoObjectiveDone.setParentId(fromApi.parentId().toString());
+
+        }
+        return dynamoObjectiveDone;
+    }
 
 }

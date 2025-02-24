@@ -12,8 +12,10 @@ import org.yearobjectives.api.dto.ObjectiveInputDto;
 import org.yearobjectives.api.dto.ObjectiveMarkerDto;
 import org.yearobjectives.api.dto.ObjectiveTypeDto;
 import org.yearobjectives.api.filter.request.UserInformation;
+import org.yearobjectives.domain.entity.MarkerType;
 import org.yearobjectives.domain.entity.Objective;
 import org.yearobjectives.domain.entity.Objective.Marker;
+import org.yearobjectives.domain.entity.util.DateUtils;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -31,7 +33,7 @@ public class ObjectiveApiAssembler {
 
     public Objective fromApi(final ObjectiveInputDto objective) {
         return Optional.ofNullable(objective)
-            .map(obj -> new Objective(UUID.randomUUID(), Objective.Type.valueOf(objective.type().name()), objective.reversible(), Collections.emptyList(), objective.cellAmount(), Instant.now(), userInformation.getCurrentUser().name())).orElse(null);
+            .map(obj -> new Objective(UUID.randomUUID(), MarkerType.valueOf(objective.type().name()), objective.reversible(), Collections.emptyList(), objective.cellAmount(), Instant.now(), userInformation.getCurrentUser().name())).orElse(null);
     }
 
     private List<ObjectiveMarkerDto> fromDomain(final List<Marker> markers) {
@@ -43,6 +45,12 @@ public class ObjectiveApiAssembler {
     private ObjectiveMarkerDto fromDomain(final Marker marker) {
         return Optional.ofNullable(marker)
         .map(mkr -> new ObjectiveMarkerDto(mkr.done(), mkr.concludedAt()))
+        .orElse(null);
+    }
+
+    public Marker fromApi(Objective objective, ObjectiveMarkerDto objectiveMarkerDto) {
+        return Optional.ofNullable(objectiveMarkerDto)
+        .map(mkr -> new Marker(mkr.done(), mkr.concludedAt(), objective.id(), objective.type().getStart(), objective.type().getEnd()))
         .orElse(null);
     }
 }

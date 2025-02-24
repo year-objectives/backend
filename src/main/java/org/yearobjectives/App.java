@@ -54,6 +54,7 @@ import org.eclipse.microprofile.openapi.annotations.servers.Server;
                                 name = Headers.USER,
                                 description = Headers.USER,
                                 in = ParameterIn.HEADER,
+                                required = true,
                                 example = "maria",
                                 schema = @Schema(type = SchemaType.STRING)),
                 },
@@ -64,6 +65,12 @@ import org.eclipse.microprofile.openapi.annotations.servers.Server;
                                 content = @Content(
                                         mediaType = MediaType.APPLICATION_JSON,
                                         schema = @Schema(ref = ResponseDto.OBJECTIVE))),
+                        @APIResponse(
+                                name = ResponseDto.USER,
+                                description = "User success response.",
+                                content = @Content(
+                                        mediaType = MediaType.APPLICATION_JSON,
+                                        schema = @Schema(ref = ResponseDto.USER))),
                         @APIResponse(
                                 name = ResponseDto.OBJECTIVE_LIST,
                                 description = "List of objectives success response.",

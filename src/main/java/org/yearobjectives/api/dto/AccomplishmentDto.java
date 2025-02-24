@@ -6,10 +6,10 @@ import org.yearobjectives.AppUtils.ResponseDto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Schema(name = ResponseDto.OBJECTIVE_MERKER,
+@Schema(name = ResponseDto.ACCOMPLISHMENT,
         description = "Objective marker response object",
         type = SchemaType.OBJECT,
-        example = ResponseDto.Examples.OBJECTIVE_MARKER)
-public record ObjectiveMarkerDto(@JsonProperty Boolean done, @JsonProperty("concluded_at") long concludedAt) {
+        examples = {ResponseDto.Examples.ACCOMPLISHMENT})
+public record AccomplishmentDto(@JsonProperty Boolean done, @JsonProperty("concluded_at") long concludedAt) {
     
 }

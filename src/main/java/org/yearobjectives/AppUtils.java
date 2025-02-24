@@ -17,10 +17,10 @@ public final class AppUtils {
 
             private static final String API_VERSION_1 = "/v1";
 
-            /**
-             * Objectives path.
-             */
+
             public static final String OBJECTIVES = API_VERSION_1 + "/objectives";
+
+            public static final String USERS = API_VERSION_1 + "/users";
 
             public static final String OBJECTIVE_ID = "/{"+ Parameters.OBJECTIVE_ID +"}";
             public static final String ENTRY_ID = "/entries/{"+ Parameters.ENTRY_ID +"}";
@@ -88,13 +88,15 @@ public final class AppUtils {
 
         public static final String OBJECTIVE = "ObjectiveResponse";
 
-        public static final String OBJECTIVE_MERKER = "ObjectiveMarkerResponse";
+        public static final String ACCOMPLISHMENT = "AccomplishmentResponse";
 
         public static final String OBJECTIVE_LIST = "ObjectiveListResponse";
 
         public static final String BAD_REQUEST = "BadRequestResponse";
         
         public static final String NO_CONTENT = "NoContentResponse";
+
+        public static final String USER = "UserResponse";
 
 
         /**
@@ -116,12 +118,18 @@ public final class AppUtils {
                     }
                 """;
 
-            public static final String OBJECTIVE_MARKER = """
+            public static final String ACCOMPLISHMENT = """
                     {
                         "done":true,
                         "concluded_at":12345
                     }
                 """;
+            public static final String USER = """
+                    {
+                        "id":"ff84904c-cb4f-4832-ba31-b6ef27bcad62",
+                        "name":"Maria"
+                    }
+                    """;
 
             private Examples() {}
         }

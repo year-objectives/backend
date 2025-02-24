@@ -17,10 +17,9 @@ import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
         description = "Objective response object",
         type = SchemaType.OBJECT,
         readOnly = true,
-        example = ResponseDto.Examples.OBJECTIVE)
-@JsonInclude(Include.NON_EMPTY)
-public record ObjectiveDto(@JsonProperty UUID id, @JsonProperty ObjectiveTypeDto type, @JsonProperty Boolean reversible, 
-                           @JsonProperty("cells") List<ObjectiveMarkerDto> objectiveMarkers) {
+        examples = {ResponseDto.Examples.OBJECTIVE})
+@JsonInclude(Include.NON_NULL)
+public record ObjectiveDto(@JsonProperty UUID id, @JsonProperty ObjectiveTypeDto type, @JsonProperty Boolean reversible) {
             
 }
 

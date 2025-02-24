@@ -5,7 +5,7 @@ import java.time.Instant;
 import org.yearobjectives.domain.entity.util.DateUtils;
 import org.yearobjectives.domain.entity.util.MarkerTypeDates;
 
-public enum MarkerType {
+public enum ObjectiveType {
 
     DAILY(new DateUtils.Day()),
     WEEKLY(new DateUtils.Week()),
@@ -14,7 +14,7 @@ public enum MarkerType {
     
     private final MarkerTypeDates markerTypeDates;
 
-    MarkerType(MarkerTypeDates markerTypeDates) {
+    ObjectiveType(MarkerTypeDates markerTypeDates) {
         this.markerTypeDates = markerTypeDates;
     }
 

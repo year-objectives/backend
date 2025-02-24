@@ -1,6 +1,6 @@
 package org.yearobjectives.api.resources;
 
-import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -14,19 +14,17 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.yearobjectives.AppUtils.Headers;
 import org.yearobjectives.AppUtils.Paths;
 import org.yearobjectives.AppUtils.ResponseDto;
-import org.yearobjectives.api.dto.ObjectiveInputDto;
 
-@Tag(name = "Objectives Api", description = "The API to handle Objectives Resource.")
-@Path(Paths.OBJECTIVES)
+@Tag(name = "Users Api", description = "The API to handle User Resource.")
+@Path(Paths.USERS)
 @Produces(MediaType.APPLICATION_JSON)
-public interface ObjectiveResources {
+public interface UserResources {
 
-    // Drop header param as soon as auth implementation is in place and user info comes from login
+    // Adapt registration mechanism after implementation of auth
     @POST
-    @Operation(summary = "Creates an objective", description = "Creates an objective",
-            operationId = "createObjective")
-    @APIResponse(responseCode = "201", ref = ResponseDto.OBJECTIVE)
+    @Operation(summary = "Registers a user", description = "Registers a user",
+            operationId = "registerUser")
+    @APIResponse(responseCode = "201", ref = ResponseDto.USER)
     @APIResponse(responseCode = "400", ref = ResponseDto.BAD_REQUEST)
-    Response createObjective(@Parameter(ref = Headers.USER) @HeaderParam(Headers.USER) String userName, @Valid ObjectiveInputDto objectiveInputDto);
-
+    Response registerUser(@Parameter(ref = Headers.USER) @HeaderParam(Headers.USER) @NotEmpty String userName);
 }

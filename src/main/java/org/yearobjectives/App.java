@@ -5,6 +5,7 @@ import org.yearobjectives.AppUtils.Paths;
 import org.yearobjectives.AppUtils.Headers;
 import org.yearobjectives.AppUtils.Parameters;
 import org.yearobjectives.AppUtils.ResponseDto;
+import org.yearobjectives.api.dto.AccomplishmentDto;
 import org.yearobjectives.api.dto.ObjectiveDto;
 
 import jakarta.ws.rs.core.Application;
@@ -44,8 +45,8 @@ import org.eclipse.microprofile.openapi.annotations.servers.Server;
                                 required = true,
                                 schema = @Schema(type = SchemaType.STRING)),
                         @Parameter(
-                                name = Parameters.ENTRY_ID,
-                                description = Parameters.ENTRY_ID,
+                                name = Parameters.ACCOMPLISHMENT_ID,
+                                description = Parameters.ACCOMPLISHMENT_ID,
                                 in = ParameterIn.PATH,
                                 example = "73cd881e-56c9-4465-903b-06b13392d300",
                                 required = true,
@@ -66,19 +67,30 @@ import org.eclipse.microprofile.openapi.annotations.servers.Server;
                                         mediaType = MediaType.APPLICATION_JSON,
                                         schema = @Schema(ref = ResponseDto.OBJECTIVE))),
                         @APIResponse(
+                                name = ResponseDto.ACCOMPLISHMENT,
+                                description = "Accomplishment success response.",
+                                content = @Content(
+                                        mediaType = MediaType.APPLICATION_JSON,
+                                        schema = @Schema(ref = ResponseDto.ACCOMPLISHMENT))),
+                        @APIResponse(
                                 name = ResponseDto.USER,
                                 description = "User success response.",
                                 content = @Content(
                                         mediaType = MediaType.APPLICATION_JSON,
                                         schema = @Schema(ref = ResponseDto.USER))),
                         @APIResponse(
-                                name = ResponseDto.OBJECTIVE_LIST,
-                                description = "List of objectives success response.",
+                                name = ResponseDto.ACCOMPLISHMENT_LIST,
+                                description = "List of accomplishment success response.",
                                 content = @Content(mediaType = MediaType.APPLICATION_JSON,
-                                        schema = @Schema(type= SchemaType.ARRAY, implementation = ObjectiveDto.class))),
+                                        schema = @Schema(type= SchemaType.ARRAY, implementation = AccomplishmentDto.class))),
                         @APIResponse(
                                 name = ResponseDto.NO_CONTENT,
                                 description = "No Content Response.",
+                                content = @Content(
+                                        mediaType = MediaType.APPLICATION_JSON)),
+                        @APIResponse(
+                                name = ResponseDto.NOT_FOUND,
+                                description = "Not Found Response.",
                                 content = @Content(
                                         mediaType = MediaType.APPLICATION_JSON)),
                         @APIResponse(

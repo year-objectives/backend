@@ -51,9 +51,6 @@
             <column name="resource_id" type="uuid">
                 <constraints nullable="false" />
             </column>
-            <column name="name" type="varchar(50)">
-                <constraints nullable="false" />
-            </column>
             <column name="done_at" type="bigint">
                 <constraints nullable="false" />
             </column>

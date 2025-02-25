@@ -1,7 +1,8 @@
 package org.yearobjectives.domain.entity;
 
 import java.time.Instant;
+import java.util.UUID;
 
-public record Accomplishment(Boolean done, Instant concludedAt) {
+public record Accomplishment(UUID resourceId, Boolean done, Instant concludedAt) {
 
 }

@@ -23,7 +23,7 @@ public final class AppUtils {
             public static final String USERS = API_VERSION_1 + "/users";
 
             public static final String OBJECTIVE_ID = "/{"+ Parameters.OBJECTIVE_ID +"}";
-            public static final String ENTRY_ID = "/entries/{"+ Parameters.ENTRY_ID +"}";
+            public static final String ENTRIES = OBJECTIVE_ID + "/entries";
 
         private Paths(){}
     }
@@ -45,7 +45,7 @@ public final class AppUtils {
 
         public static final String OBJECTIVE_ID = "objectiveId";
 
-        public static final String ENTRY_ID = "entryId";
+        public static final String ACCOMPLISHMENT_ID = "accomplishmentId";
     }
 
     /**
@@ -74,7 +74,7 @@ public final class AppUtils {
                     {
                         "type":"WEEKLY",
                         "reversible":true,
-                        "cell_amount":4
+                        "amount":4
                     }
                 """;
 
@@ -90,14 +90,15 @@ public final class AppUtils {
 
         public static final String ACCOMPLISHMENT = "AccomplishmentResponse";
 
-        public static final String OBJECTIVE_LIST = "ObjectiveListResponse";
+        public static final String ACCOMPLISHMENT_LIST = "AccomplishmentListResponse";
 
         public static final String BAD_REQUEST = "BadRequestResponse";
-        
+
         public static final String NO_CONTENT = "NoContentResponse";
 
         public static final String USER = "UserResponse";
 
+        public static final String NOT_FOUND = "NotFoundResponse";
 
         /**
          * Response body examples util.

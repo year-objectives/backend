@@ -6,6 +6,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -22,13 +23,7 @@ public class AccomplishmentEntity {
     private Long id;
 
     @Column
-    private String name;
-
-    @Column
     private UUID resourceId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private ObjectiveEntity objective;
 
     @Column
     private Long doneAt;
@@ -42,15 +37,17 @@ public class AccomplishmentEntity {
     @Column
     private Long maxPossibleStart;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "objective_id", nullable = false)
+    private ObjectiveEntity objective;
+
     public AccomplishmentEntity() {
 
     }
 
-    public AccomplishmentEntity(final Long id, final String name, final UUID resourceId, final ObjectiveEntity objective, final Long doneAt, final Boolean done, final Long minPossibleStart, final Long maxPossibleStart) {
-        this.id = id;
-        this.name = name;
-        this.resourceId = resourceId;
+    public AccomplishmentEntity(ObjectiveEntity objective, final UUID resourceId, final Long doneAt, final Boolean done, final Long minPossibleStart, final Long maxPossibleStart) {
         this.objective = objective;
+        this.resourceId = resourceId;
         this.doneAt = doneAt;
         this.done = done;
         this.minPossibleStart = minPossibleStart;
@@ -61,16 +58,8 @@ public class AccomplishmentEntity {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public UUID getResourceId() {
         return resourceId;
-    }
-
-    public ObjectiveEntity getObjective() {
-        return objective;
     }
 
     public Long getDoneAt() {

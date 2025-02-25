@@ -18,7 +18,7 @@ public class ObjectiveAssembler {
 
     public Objective fromEntity(ObjectiveEntity entity) {
         return Optional.ofNullable(entity).map(objectiveEntity ->
-                new Objective(objectiveEntity.getResourceId(), ObjectiveType.valueOf(objectiveEntity.getType()), objectiveEntity.getReversible(), objectiveEntity.getTargetAmount(), Instant.ofEpochMilli(objectiveEntity.getCreatedAt()), objectiveEntity.getUser().getName()))
+                new Objective(objectiveEntity.getResourceId(), ObjectiveType.valueOf(objectiveEntity.getType()), objectiveEntity.getReversible(), objectiveEntity.getTargetAmount(), Instant.ofEpochSecond(objectiveEntity.getCreatedAt()), objectiveEntity.getUser().getName()))
                 .orElse(null);
     }
 

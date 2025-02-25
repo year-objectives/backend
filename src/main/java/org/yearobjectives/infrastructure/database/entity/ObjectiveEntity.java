@@ -8,9 +8,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -40,6 +43,9 @@ public class ObjectiveEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private UserEntity user;
+
+    @OneToMany(mappedBy = "objective", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<AccomplishmentEntity> accomplishments;
 
     public ObjectiveEntity() {
     }
@@ -79,6 +85,17 @@ public class ObjectiveEntity {
 
     public UserEntity getUser() {
         return user;
+    }
+
+    public void addAccomplishment(AccomplishmentEntity accomplishmentEntity) {
+        if(this.getAccomplishments().isEmpty()) {
+            this.accomplishments = new ArrayList<>();
+        }
+        accomplishments.add(accomplishmentEntity);
+    }
+
+    public List<AccomplishmentEntity> getAccomplishments() {
+        return accomplishments;
     }
 }
 

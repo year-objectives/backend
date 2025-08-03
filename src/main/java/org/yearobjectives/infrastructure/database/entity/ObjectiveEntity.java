@@ -1,5 +1,9 @@
 package org.yearobjectives.infrastructure.database.entity;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,10 +15,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 
 @Entity
@@ -87,15 +87,30 @@ public class ObjectiveEntity {
         return user;
     }
 
-    public void addAccomplishment(AccomplishmentEntity accomplishmentEntity) {
-        if(this.getAccomplishments().isEmpty()) {
-            this.accomplishments = new ArrayList<>();
-        }
-        accomplishments.add(accomplishmentEntity);
-    }
-
     public List<AccomplishmentEntity> getAccomplishments() {
         return accomplishments;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, resourceId, type, reversible, targetAmount, createdAt, user, accomplishments);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ObjectiveEntity other = (ObjectiveEntity) obj;
+        return Objects.equals(id, other.id) && Objects.equals(resourceId, other.resourceId)
+                && Objects.equals(type, other.type) && Objects.equals(reversible, other.reversible)
+                && Objects.equals(targetAmount, other.targetAmount) && Objects.equals(createdAt, other.createdAt)
+                && Objects.equals(user, other.user) && Objects.equals(accomplishments, other.accomplishments);
+    }
+
+    
 }
 

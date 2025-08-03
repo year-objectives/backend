@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -77,4 +78,27 @@ public class AccomplishmentEntity {
     public Long getMaxPossibleStart() {
         return maxPossibleStart;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, resourceId, doneAt, done, minPossibleStart, maxPossibleStart, objective);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        AccomplishmentEntity other = (AccomplishmentEntity) obj;
+        return Objects.equals(id, other.id) && Objects.equals(resourceId, other.resourceId)
+                && Objects.equals(doneAt, other.doneAt) && Objects.equals(done, other.done)
+                && Objects.equals(minPossibleStart, other.minPossibleStart)
+                && Objects.equals(maxPossibleStart, other.maxPossibleStart)
+                && Objects.equals(objective, other.objective);
+    }
+
+    
 }

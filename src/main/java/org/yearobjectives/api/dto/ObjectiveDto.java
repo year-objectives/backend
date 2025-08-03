@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;

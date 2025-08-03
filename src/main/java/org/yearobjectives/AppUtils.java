@@ -21,6 +21,8 @@ public final class AppUtils {
             public static final String OBJECTIVES = API_VERSION_1 + "/objectives";
 
             public static final String USERS = API_VERSION_1 + "/users";
+            
+            public static final String AUTH = API_VERSION_1 + "/authentication";
 
             public static final String OBJECTIVE_ID = "/{"+ Parameters.OBJECTIVE_ID +"}";
             public static final String ENTRIES = OBJECTIVE_ID + "/entries";

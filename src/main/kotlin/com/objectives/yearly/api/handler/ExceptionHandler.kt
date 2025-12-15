@@ -1,8 +1,11 @@
 package com.objectives.yearly.api.handler
 
 import com.objectives.yearly.api.dto.views.ErrorView
+import com.objectives.yearly.api.dto.views.UserView
+import com.objectives.yearly.domain.UserNotFoundException
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -19,12 +22,27 @@ class ExceptionHandler {
     ): ErrorView {
         val errorMessage = HashMap<String, String?>()
         exception.bindingResult.fieldErrors.forEach{
-                e -> errorMessage.put(e.field, e.defaultMessage)
+                e ->
+            errorMessage[e.field] = e.defaultMessage
         }
         return ErrorView(
             status = HttpStatus.BAD_REQUEST.value(),
             error = HttpStatus.BAD_REQUEST.name,
             message = errorMessage.toString(),
+            path = request.servletPath
+        )
+    }
+
+    @ExceptionHandler(UserNotFoundException::class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    fun handleUserNotFound(
+        exception: UserNotFoundException,
+        request: HttpServletRequest
+    ): ErrorView {
+        return ErrorView(
+            status = HttpStatus.NOT_FOUND.value(),
+            error = HttpStatus.NOT_FOUND.name,
+            message = "User with username ${exception.username} not found",
             path = request.servletPath
         )
     }

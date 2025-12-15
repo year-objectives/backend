@@ -5,16 +5,24 @@ import com.objectives.yearly.api.dto.views.UserView
 import com.objectives.yearly.domain.mapper.utils.ApiToModel
 import com.objectives.yearly.domain.mapper.utils.ModelToApi
 import com.objectives.yearly.infrastructure.database.model.UserEntity
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 
 @Component
-class UserMapper(): ApiToModel<UserRegisterForm, UserEntity>, ModelToApi<UserEntity, UserView> {
+class UserMapper(private val passwordEncoder: PasswordEncoder): ApiToModel<UserRegisterForm, UserEntity>, ModelToApi<UserEntity, UserView> {
 
     override fun toModel(api: UserRegisterForm): UserEntity {
-        return UserEntity(name = api.name, userName = api.userName, email = api.email, password = api.password)
+        return UserEntity(name = fullNameConverter(api.firstName, api.lastName),
+            username = api.username, email = api.email, password = passwordEncoder.encode(api.password))
     }
 
     override fun toView(model: UserEntity): UserView {
-        return UserView(model.resourceId, model.name, model.userName, model.email)
+        return UserView(name = model.name, username = model.username, email = model.email)
+    }
+
+    private fun fullNameConverter(firstName: String, lastName: String): String {
+        val capitalFirstName = firstName.trim().replaceFirstChar { it.uppercase()}
+        val capitalLastName = lastName.trim().replaceFirstChar { it.uppercase()}
+        return "$capitalFirstName $capitalLastName"
     }
 }

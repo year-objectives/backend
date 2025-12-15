@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/objectives")
-class ObjectiveController(val service: ObjectiveService) {
+class ObjectiveController(private val service: ObjectiveService) {
 
     @GetMapping
     fun listAll(): List<ObjectiveView> {

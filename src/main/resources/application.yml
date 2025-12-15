@@ -19,3 +19,13 @@ spring:
 server:
   servlet:
     context-path: /api/v1
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+jwt:
+  secret: ${JWT-SECRET:9kZznFFKIx3H6N//OcQnXpZ7thkfi8J1OMZKLa5FXQeaGtAuAYrtPdvy7GcIS+j2QjThD7hCI0rfC/pvkVfCAg=}
+  expiration: 900000

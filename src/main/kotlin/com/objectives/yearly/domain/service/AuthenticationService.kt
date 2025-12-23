@@ -1,14 +1,16 @@
 package com.objectives.yearly.domain.service
 
-import com.objectives.yearly.api.dto.forms.UserLoginForm
-import com.objectives.yearly.api.dto.forms.UserRegisterForm
-import com.objectives.yearly.api.dto.views.AuthResponse
+import com.objectives.yearly.api.dto.requests.auth.UserLoginDto
+import com.objectives.yearly.api.dto.requests.auth.UserRefreshDto
+import com.objectives.yearly.api.dto.requests.auth.UserRegisterDto
+import com.objectives.yearly.api.dto.responses.AuthenticatedDto
+import com.objectives.yearly.domain.UserUnauthorizedException
 import com.objectives.yearly.domain.UserAlreadyExistsException
-import com.objectives.yearly.domain.UserNotFoundException
 import com.objectives.yearly.domain.mapper.UserMapper
-import com.objectives.yearly.infrastructure.auth.JwtService
-import com.objectives.yearly.infrastructure.database.model.UserEntity
+import com.objectives.yearly.infrastructure.auth.AccessTokenService
+import com.objectives.yearly.infrastructure.auth.RefreshTokenService
 import com.objectives.yearly.infrastructure.database.repository.UserRepository
+import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -18,45 +20,58 @@ import org.springframework.stereotype.Service
 @Service
 class AuthenticationService(
     private val userRepository: UserRepository,
-    private val passwordEncoder: PasswordEncoder,
-    private val jwtService: JwtService,
+    private val accessTokenService: AccessTokenService,
+    private val refreshTokenService: RefreshTokenService,
     private val userMapper: UserMapper,
-    private val authenticationManager: AuthenticationManager
+    private val authenticationManager: AuthenticationManager,
+    private val passwordEncoder: PasswordEncoder
 ) {
 
-    fun register(userRegisterForm: UserRegisterForm): AuthResponse {
-        require(!userRepository.existsByUsernameOrEmail(userRegisterForm.username, userRegisterForm.email)) {
-            throw UserAlreadyExistsException(userRegisterForm.username, "User already exists")
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
+    fun register(userRegisterDto: UserRegisterDto): AuthenticatedDto {
+        require(!userRepository.existsByUsernameOrEmail(userRegisterDto.username, userRegisterDto.email)) {
+            throw UserAlreadyExistsException("User already exists")
         }
 
-        val user = userMapper.toModel(userRegisterForm)
+        val user = userMapper.toModel(userRegisterDto)
 
-        val token = jwtService.generateToken(user.username)
-
-        userRepository.save(user)
-        return AuthResponse(
-            token = token,
-            username = user.username
+        val savedUser = userRepository.save(user)
+        return AuthenticatedDto(
+            authToken = accessTokenService.generateToken(savedUser.resourceId),
+            refreshTokenId = refreshTokenService.generateToken(savedUser.resourceId)
         )
     }
 
-    fun login(loginForm: UserLoginForm): AuthResponse {
+    fun login(userLoginDto: UserLoginDto): AuthenticatedDto {
+        val user = userRepository.findByUsername(userLoginDto.username)
+            ?: throw UserUnauthorizedException("Unauthorized user")
+
         authenticationManager.authenticate(
-            UsernamePasswordAuthenticationToken(
-                loginForm.username,
-                loginForm.password
-            )
+            UsernamePasswordAuthenticationToken(userLoginDto.username, userLoginDto.password)
         )
 
-        val user = userRepository.findByUsername(loginForm.username)
-            ?: throw UserNotFoundException(loginForm.username,"User not found")
-
-        val token = jwtService.generateToken(user.username)
-
-        return AuthResponse(
-            token = token,
-            username = user.username
+        return AuthenticatedDto(
+            authToken = accessTokenService.generateToken(user.resourceId),
+            refreshTokenId = refreshTokenService.generateToken(user.resourceId)
         )
     }
 
+    fun refreshAuthToken(userRefreshDto: UserRefreshDto): AuthenticatedDto {
+        val username = refreshTokenService.validateAndGetUserId(userRefreshDto.refreshTokenId)
+            ?: throw UserUnauthorizedException("Unauthorized user")
+
+
+        refreshTokenService.invalidateToken(userRefreshDto.refreshTokenId)
+
+
+        return AuthenticatedDto(
+            authToken = accessTokenService.generateToken(username),
+            refreshTokenId = refreshTokenService.generateToken(username)
+        )
+    }
+
+    fun logout(userRefreshDto: UserRefreshDto) {
+        refreshTokenService.invalidateToken(userRefreshDto.refreshTokenId)
+    }
 }

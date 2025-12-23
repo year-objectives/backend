@@ -8,6 +8,18 @@ services:
       - POSTGRES_DB=year_objectives
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - objective-backend
+  redis:
+    image: redis:8-alpine
+    container_name: objectives-cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
     networks:
       - objective-backend
   liquibase:
@@ -27,6 +39,11 @@ services:
       - update
     networks:
       - objective-backend
+
+
 networks:
   objective-backend:
     name: objective-backend
+volumes:
+  postgres_data:
+  redis_data:

@@ -10,22 +10,14 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
 server:
   servlet:
     context-path: /api/v1
+
 springdoc:
   api-docs:
-    enabled: true
-    path: /api-docs
-  swagger-ui:
-    enabled: true
-    path: /swagger-ui.html
-jwt:
-  secret: ${JWT-SECRET:9kZznFFKIx3H6N//OcQnXpZ7thkfi8J1OMZKLa5FXQeaGtAuAYrtPdvy7GcIS+j2QjThD7hCI0rfC/pvkVfCAg=}
-  expiration: 900000
+    enabled: false

@@ -1,50 +1,65 @@
+@file:Suppress("PROPERTY_HIDES_JAVA_FIELD")
+
 package com.objectives.yearly.infrastructure.auth
 
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 class JwtAuthFilter(
-    private val jwtService: JwtService,
-    private val userDetailsService: UserDetailsService
+    private val accessTokenService: AccessTokenService
 ) : OncePerRequestFilter() {
     
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val authHeader = request.getHeader("Authorization")
-        
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response)
-            return
-        }
-        
-        val token = authHeader.substring(7)
-        val username = jwtService.extractUsername(token)
-        
-        if (username != null && SecurityContextHolder.getContext().authentication == null) {
-            val userDetails = userDetailsService.loadUserByUsername(username)
+        try {
+            val authHeader = request.getHeader("Authorization")
             
-            if (jwtService.validateToken(token, userDetails)) {
-                val authToken = UsernamePasswordAuthenticationToken(
-                    userDetails,
-                    null,
-                    userDetails.authorities
-                )
-                authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
-                SecurityContextHolder.getContext().authentication = authToken
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                filterChain.doFilter(request, response)
+                return
             }
+            
+            val token = authHeader.substring(7)
+
+            if (!accessTokenService.validateToken(token)) {
+                filterChain.doFilter(request, response)
+                return
+            }
+
+            val userId = accessTokenService.getUserId(token)
+
+            val authentication = UsernamePasswordAuthenticationToken(
+                userId,
+                null,
+                emptyList()
+            )
+
+            SecurityContextHolder.getContext().authentication = authentication
+            
+        } catch (e: Exception) {
+            logger.error("Cannot set user authentication: ${e.message}")
         }
         
         filterChain.doFilter(request, response)
+    }
+
+    override fun shouldNotFilter(request: HttpServletRequest): Boolean {
+    val path = request.requestURI
+    return path.startsWith("/auth/login") || 
+            path.startsWith("/auth/register") ||
+            path.startsWith("/auth/refresh-token")
     }
 }

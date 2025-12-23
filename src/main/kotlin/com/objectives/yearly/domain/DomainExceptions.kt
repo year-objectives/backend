@@ -1,5 +1,10 @@
 package com.objectives.yearly.domain
 
-class UserNotFoundException(val username: String, override val message: String?) : RuntimeException(message)
+class UserUnauthorizedException(override val message: String?) : RuntimeException(message)
 
-class UserAlreadyExistsException(val username: String, override val message: String?) : IllegalArgumentException(message)
+class UserNotFoundException(override val message: String?) : RuntimeException(message)
+
+class UserAlreadyExistsException(override val message: String?) : IllegalArgumentException(message)
+
+class UserUniqueFieldTakenException(val filedName: String, override val message: String?) : IllegalArgumentException(message)
+

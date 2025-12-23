@@ -1,22 +1,22 @@
 package com.objectives.yearly.domain.service
 
-import com.objectives.yearly.api.dto.forms.ObjectiveForm
-import com.objectives.yearly.api.dto.views.ObjectiveView
+import com.objectives.yearly.api.dto.requests.ObjectiveRequestDto
+import com.objectives.yearly.api.dto.responses.ObjectiveResponseDto
 import com.objectives.yearly.domain.mapper.ObjectiveMapper
 import com.objectives.yearly.infrastructure.database.repository.ObjectiveRepository
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
-class ObjectiveService(val repository: ObjectiveRepository, val mapper: ObjectiveMapper) {
+class ObjectiveService(
+    val repository: ObjectiveRepository,
+    val mapper: ObjectiveMapper) {
 
 
-    fun listAll(): List<ObjectiveView> {
-        return mapper.toView(repository.findAll())
+    fun listAll(): List<ObjectiveResponseDto> {
+        return mapper.toApi(repository.findAll())
     }
 
-    @Transactional
-    fun registerObjective(objective: ObjectiveForm): ObjectiveView {
+    fun registerObjective(objective: ObjectiveRequestDto): ObjectiveResponseDto {
         TODO()
     }
 }

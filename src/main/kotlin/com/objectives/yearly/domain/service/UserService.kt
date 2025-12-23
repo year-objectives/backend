@@ -1,18 +1,55 @@
 package com.objectives.yearly.domain.service
 
-import com.objectives.yearly.api.dto.views.UserView
-import com.objectives.yearly.domain.UserNotFoundException
+import com.objectives.yearly.api.controller.utils.SecurityUtils
+import com.objectives.yearly.api.dto.requests.UserDto
+import com.objectives.yearly.api.dto.requests.auth.UserLoginDto
+import com.objectives.yearly.api.dto.responses.UserResponseDto
+import com.objectives.yearly.domain.UserUniqueFieldTakenException
 import com.objectives.yearly.domain.mapper.UserMapper
+import com.objectives.yearly.infrastructure.auth.RefreshTokenService
+import com.objectives.yearly.infrastructure.database.model.UserEntity
 import com.objectives.yearly.infrastructure.database.repository.UserRepository
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
-class UserService(val userRepository: UserRepository, val mapper: UserMapper) {
+class UserService(
+    private val repository: UserRepository,
+    private val mapper: UserMapper,
+    private val refreshTokenService: RefreshTokenService,
+    private val securityUtils: SecurityUtils) {
 
-    fun findByUsername(username: String): UserView {
-        return userRepository.findByUsername(username)
-            ?.let { mapper.toView(it) }
-            ?: throw UserNotFoundException(username,"User not found")
+    fun changePassword(loginDto: UserLoginDto) {
+        val userId = securityUtils.getCurrentUserId()
+        val user = repository.findByResourceId(UUID.fromString(userId))
+
+        user.password = mapper.getPasswordEncoded(loginDto.password)
+
+        refreshTokenService.invalidateAllUserTokens(user.resourceId)
+        repository.save(user)
     }
+
+    fun userDetails(userDto: UserDto): UserResponseDto {
+         when {
+            repository.existsByEmail(userDto.email) -> throw UserUniqueFieldTakenException("email", "Email being updated already exists")
+            repository.existsByUsername(userDto.username) -> throw UserUniqueFieldTakenException("username", "Username being updated already exists")
+        }
+
+        val user = getCurrentUser()
+
+        user.username = userDto.username
+        user.email = userDto.email
+        user.name = mapper.fullNameConverter(userDto.firstName, userDto.lastName)
+
+        val savedUser = repository.save(user)
+        return mapper.toApi(savedUser)
+    }
+
+    fun getDetails(): UserResponseDto {
+        val user = getCurrentUser()
+        return mapper.toApi(user)
+    }
+
+    private fun getCurrentUser(): UserEntity = repository.findByResourceId(UUID.fromString(securityUtils.getCurrentUserId()))
+
 }
-    

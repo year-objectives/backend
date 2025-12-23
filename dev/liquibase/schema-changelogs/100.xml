@@ -14,6 +14,9 @@
             <column name="name" type="varchar(50)">
                 <constraints nullable="false" />
             </column>
+            <column name="resource_id" type="uuid">
+                <constraints nullable="false" unique="true"/>
+            </column>
             <column name="username" type="varchar(50)">
                 <constraints nullable="false" unique="true"/>
             </column>
@@ -23,6 +26,13 @@
             <column name="password" type="varchar(256)">
                 <constraints nullable="false" />
             </column>
+            <column name="created_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+            <column name="updated_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+            <column name="authorities" type="bytea[]"/>
         </createTable>
         
         <createTable tableName="objectives">
@@ -45,7 +55,10 @@
             <column name="reversible" type="bool">
                 <constraints nullable="false" />
             </column>
-            <column name="created_at" type="bigint">
+            <column name="created_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+            <column name="updated_at" type="timestamp without time zone">
                 <constraints nullable="false" />
             </column>
             <column name="target_amount" type="int">
@@ -75,6 +88,12 @@
             <column name="objective_id" type="bigint">
                 <constraints foreignKeyName="objective_id"
                              referencedTableName="objectives" referencedColumnNames="id"/>
+            </column>
+            <column name="created_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+            <column name="updated_at" type="timestamp without time zone">
+                <constraints nullable="false" />
             </column>
         </createTable>
 

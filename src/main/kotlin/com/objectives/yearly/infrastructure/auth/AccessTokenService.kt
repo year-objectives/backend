@@ -10,34 +10,33 @@ import java.util.*
 import javax.crypto.SecretKey
 
 @Service
-class JwtService {
+class AccessTokenService(private val userDetailsService: CustomUserDetailsService) {
     
     @Value("\${jwt.secret}")
     private lateinit var secret: String
     
-    @Value("\${jwt.expiration}")
-    private var expiration: Long = 0
+    @Value("\${jwt.access-expiration}")
+    private var accessExpiration: Long = 100000
     
     private val key: SecretKey by lazy {
         Keys.hmacShaKeyFor(secret.toByteArray())
     }
     
-    fun generateToken(username: String): String {
+    fun generateToken(userId: UUID): String {
         return Jwts.builder()
-            .subject(username)
+            .subject(userId.toString())
             .issuedAt(Date())
+            .expiration(Date(System.currentTimeMillis() + accessExpiration))
+            .signWith(key)
+            .compact()
+    }
 
-            .expiration(Date(System.currentTimeMillis() + expiration))
-            .signWith(key).compact()
+    fun validateToken(token: String): Boolean {
+        return !isTokenExpired(token)
     }
-    
-    fun extractUsername(token: String): String? {
+
+    fun getUserId(token: String): String? {
         return extractClaims(token)?.subject
-    }
-    
-    fun validateToken(token: String, userDetails: UserDetails): Boolean {
-        val username = extractUsername(token)
-        return username == userDetails.username && !isTokenExpired(token)
     }
     
     private fun extractClaims(token: String): Claims? {
@@ -47,7 +46,7 @@ class JwtService {
                 .build()
                 .parseSignedClaims(token)
                 .payload
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }

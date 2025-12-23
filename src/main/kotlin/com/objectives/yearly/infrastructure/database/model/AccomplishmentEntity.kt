@@ -18,4 +18,4 @@ data class AccomplishmentEntity(
     val maxPossibleStart: Long,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "objective_id", nullable = false)
-    val objective: ObjectiveEntity)
+    val objective: ObjectiveEntity) : AuditableEntity()

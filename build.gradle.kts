@@ -25,19 +25,26 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("io.jsonwebtoken:jjwt-api:0.13.0")
-    implementation("io.jsonwebtoken:jjwt-jackson:0.13.0")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
+	// Redis
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("io.lettuce:lettuce-core")
 
+	// JWT
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("io.jsonwebtoken:jjwt-api:0.13.0")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.13.0")
+	implementation("io.jsonwebtoken:jjwt-impl:0.13.0")
 
+	// Database
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	runtimeOnly("org.postgresql:postgresql")
 
-	implementation("net.logstash.logback:logstash-logback-encoder:9.0")qq
+	implementation("net.logstash.logback:logstash-logback-encoder:9.0")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+//	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0")
 	/* =========================
 	 * Testing tools
 	 * ========================= */

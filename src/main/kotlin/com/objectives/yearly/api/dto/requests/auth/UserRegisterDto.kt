@@ -1,10 +1,10 @@
-package com.objectives.yearly.api.dto.forms
+package com.objectives.yearly.api.dto.requests.auth
 
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
-data class UserRegisterForm(
+data class UserRegisterDto(
                     @field:NotBlank(message = "User's first name is mandatory")
                     val firstName: String,
                     @field:NotBlank(message = "User's last name is mandatory")

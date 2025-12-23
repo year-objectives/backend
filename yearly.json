@@ -1,0 +1,230 @@
+{
+  "v": 11,
+  "name": "Yearly",
+  "folders": [
+    {
+      "v": 11,
+      "name": "Auth",
+      "folders": [],
+      "requests": [
+        {
+          "v": "17",
+          "name": "Register",
+          "method": "POST",
+          "endpoint": "http://localhost:8080/api/v1/auth/register",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"username\": \"mami322\",\n  \"first_name\": \"maria\",\n  \"last_name\": \"almeida\",\n  \"email\": \"email3@domain.com\",\n  \"password\": \"amorzin12345\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Login",
+          "method": "POST",
+          "endpoint": "http://localhost:8080/api/v1/auth/login",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"username\": \"mami322\",\n  \"password\": \"amorzin78910\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Logout",
+          "method": "POST",
+          "endpoint": "http://localhost:8080/api/v1/auth/logout",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4OTczNzViZC1jMDBmLTQwNjYtYmY3OS00YjcwZGU5Y2QwN2IiLCJpYXQiOjE3NjY1MjExNjMsImV4cCI6MTc2NjUyMjk2M30.LB3DNOGa7xY0N96xLa6HWkLSDp0ILXreReMG_f4VsAPOdTO5N58acP7cm8Wus6rPueLvGKatcPyuuO9XWgQ2MQ",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"refresh_token_id\": \"45568403-2291-46dc-9c3f-63dcc7f2b1ea\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Refresh",
+          "method": "POST",
+          "endpoint": "http://localhost:8080/api/v1/auth/refresh-token",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "none",
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4OTczNzViZC1jMDBmLTQwNjYtYmY3OS00YjcwZGU5Y2QwN2IiLCJpYXQiOjE3NjY1MjA2NDIsImV4cCI6MTc2NjUyMjQ0Mn0.jBwLUxDEmssqMMce3I6f7mXdIf3L4yIk-4Hq9iT5YXj26_ejuBK0IodQNC2eEgzndfK7W-XWko8Ca4dqFfxYbg",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"refresh_token_id\": \"45568403-2291-46dc-9c3f-63dcc7f2b1ea\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "description": null
+    },
+    {
+      "v": 11,
+      "name": "Objectives",
+      "folders": [],
+      "requests": [
+        {
+          "v": "17",
+          "name": "Get All",
+          "method": "GET",
+          "endpoint": "http://localhost:8080/api/v1/objectives",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4OTczNzViZC1jMDBmLTQwNjYtYmY3OS00YjcwZGU5Y2QwN2IiLCJpYXQiOjE3NjY1MjExNjMsImV4cCI6MTc2NjUyMjk2M30.LB3DNOGa7xY0N96xLa6HWkLSDp0ILXreReMG_f4VsAPOdTO5N58acP7cm8Wus6rPueLvGKatcPyuuO9XWgQ2MQ",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": ""
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "description": null
+    },
+    {
+      "v": 11,
+      "name": "User",
+      "folders": [],
+      "requests": [
+        {
+          "v": "17",
+          "name": "Change Password",
+          "method": "POST",
+          "endpoint": "http://localhost:8080/api/v1/users/password",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "authActive": true,
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4OTczNzViZC1jMDBmLTQwNjYtYmY3OS00YjcwZGU5Y2QwN2IiLCJpYXQiOjE3NjY1MjE0NjEsImV4cCI6MTc2NjUyMzI2MX0.8YjH8O26AqTagEf1BZNM0vVkPfR-mKp__vsdxylBB-SGm8veSYkpIB8Aov1zN7YP7zAV2PpA_ynqrsaiF6QH0A"
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"username\": \"mami322\",\n  \"password\": \"amorzin78910\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Update details",
+          "method": "POST",
+          "endpoint": "http://localhost:8080/api/v1/users/details",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "authActive": true,
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4OTczNzViZC1jMDBmLTQwNjYtYmY3OS00YjcwZGU5Y2QwN2IiLCJpYXQiOjE3NjY1MjE1NDAsImV4cCI6MTc2NjUyMzM0MH0.qrKTDprmMi-Gx6lIQJuoLZiUdIgfcVPmYZMdTAn8dHQU5DLr0OmgzL0EffL6P7j-VO2dArfACVHS6tvUMqyeHg"
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"username\": \"lila123\",\n  \"first_name\": \"Liliana\",\n  \"last_name\": \"Almeida\",\n  \"email\": \"maria.mgl@proton.me\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Get details ",
+          "method": "GET",
+          "endpoint": "http://localhost:8080/api/v1/users/details",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "authActive": true,
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4OTczNzViZC1jMDBmLTQwNjYtYmY3OS00YjcwZGU5Y2QwN2IiLCJpYXQiOjE3NjY1MjE0NjEsImV4cCI6MTc2NjUyMzI2MX0.8YjH8O26AqTagEf1BZNM0vVkPfR-mKp__vsdxylBB-SGm8veSYkpIB8Aov1zN7YP7zAV2PpA_ynqrsaiF6QH0A"
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "description": null
+    }
+  ],
+  "requests": [],
+  "auth": {
+    "authType": "none",
+    "authActive": true
+  },
+  "headers": [],
+  "variables": [],
+  "description": ""
+}

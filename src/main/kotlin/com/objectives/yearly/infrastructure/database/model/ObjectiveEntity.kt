@@ -28,5 +28,4 @@ data class ObjectiveEntity(
     val name: String,
     val resourceId: UUID = UUID.randomUUID(),
     val reversible: Boolean,
-    val createdAt: Long = Instant.now().toEpochMilli(),
-    val targetAmount: Int)
+    val targetAmount: Int) : AuditableEntity()

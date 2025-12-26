@@ -1,0 +1,24 @@
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    default-property-inclusion: non_null
+  application:
+    name: yearly-persist
+  datasource:
+    url: jdbc:postgresql://localhost:5432/year_objectives
+    username: maria
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  data:
+    redis:
+      host: localhost
+      port: 6379
+server:
+  servlet:
+    context-path: /api/v1
+
+springdoc:
+  api-docs:
+    enabled: false

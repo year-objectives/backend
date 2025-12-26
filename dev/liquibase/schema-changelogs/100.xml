@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet author="maria" id="001">
+
+        <createTable tableName="users">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="users_pk" nullable="false" />
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="resource_id" type="uuid">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="username" type="varchar(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="varchar(256)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+            <column name="updated_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+            <column name="authorities" type="bytea[]"/>
+        </createTable>
+        
+        <createTable tableName="objectives">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="objectives_pk" nullable="false" />
+            </column>
+            <column name="resource_id" type="uuid">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="user_id"
+                             referencedTableName="users" referencedColumnNames="id"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="text"/>
+            <column name="type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="reversible" type="bool">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+            <column name="updated_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+            <column name="target_amount" type="int">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="accomplishments">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="accomplishments_pk" nullable="false" />
+            </column>
+            <column name="resource_id" type="uuid">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="done_at" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="min_possible_start" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="max_possible_start" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="done" type="bool">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="text"/>
+            <column name="objective_id" type="bigint">
+                <constraints foreignKeyName="objective_id"
+                             referencedTableName="objectives" referencedColumnNames="id"/>
+            </column>
+            <column name="created_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+            <column name="updated_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="tags">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="tags_pk" nullable="false" />
+            </column>
+            <column name="resource_id" type="uuid">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+            <column name="updated_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createSequence dataType="bigint" incrementBy="1" sequenceName="objectives_seq" startValue="1"/>
+
+        <createSequence dataType="bigint" incrementBy="1" sequenceName="users_seq" startValue="1"/>
+
+        <createSequence dataType="bigint" incrementBy="1" sequenceName="accomplishments_seq" startValue="1"/>
+
+        <createSequence dataType="bigint" incrementBy="1" sequenceName="tags_seq" startValue="1"/>
+
+        <addUniqueConstraint
+                tableName="objectives"
+                columnNames="name, user_id"
+                constraintName="uk_name_user_id"/>
+
+
+        <createTable tableName="objectives_tags">
+            <column name="objective_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tag_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey
+                tableName="objectives_tags"
+                columnNames="objective_id, tag_id"
+                constraintName="pk_objectives_tags"/>
+
+            <addForeignKeyConstraint
+                    baseTableName="objectives_tags"
+                    baseColumnNames="objective_id"
+                    constraintName="fk_objectives_tags_objective"
+                    referencedTableName="objectives"
+                    referencedColumnNames="id"
+                    onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="objectives_tags"
+                baseColumnNames="tag_id"
+                constraintName="fk_objectives_tags_tag"
+                referencedTableName="tags"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet author="maria" id="tag-100">
+        <tagDatabase tag="100"/>
+    </changeSet>
+</databaseChangeLog>

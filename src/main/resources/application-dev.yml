@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/year_objectives
+    username: maria
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
+jwt:
+  secret: ${JWT-SECRET:9kZznFFKIx3H6N//OcQnXpZ7thkfi8J1OMZKLa5FXQeaGtAuAYrtPdvy7GcIS+j2QjThD7hCI0rfC/pvkVfCAg=}
+  access-expiration: 1800000
+  refresh-expiration: 2592000000

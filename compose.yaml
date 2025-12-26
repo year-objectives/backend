@@ -1,0 +1,49 @@
+services:
+  database:
+    image: postgres:14.7
+    container_name: objectives-database
+    environment:
+      - POSTGRES_USER=maria
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=year_objectives
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - objective-backend
+  redis:
+    image: redis:8-alpine
+    container_name: objectives-cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - objective-backend
+  liquibase:
+    image: liquibase/liquibase:4.27.0
+    container_name: objectives-liquibase
+    depends_on:
+      - database
+    restart: "no"
+    volumes:
+      - ./dev/liquibase:/liquibase/changelog
+    command:
+      - --driver=org.postgresql.Driver
+      - --url=jdbc:postgresql://database:5432/year_objectives
+      - --changeLogFile=./changelog/changelog-master.xml
+      - --username=maria
+      - --password=password
+      - update
+    networks:
+      - objective-backend
+
+
+networks:
+  objective-backend:
+    name: objective-backend
+volumes:
+  postgres_data:
+  redis_data:

@@ -49,6 +49,7 @@
             <column name="name" type="text">
                 <constraints nullable="false" />
             </column>
+            <column name="description" type="text"/>
             <column name="type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
@@ -85,6 +86,7 @@
             <column name="done" type="bool">
                 <constraints nullable="false" />
             </column>
+            <column name="description" type="text"/>
             <column name="objective_id" type="bigint">
                 <constraints foreignKeyName="objective_id"
                              referencedTableName="objectives" referencedColumnNames="id"/>

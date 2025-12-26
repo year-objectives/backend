@@ -2,11 +2,13 @@ package com.objectives.yearly.api.handler
 
 import com.objectives.yearly.api.dto.responses.GenericErrorDto
 import com.objectives.yearly.domain.ResourceNotFoundException
+import com.objectives.yearly.domain.UnauthorizedUserException
 import com.objectives.yearly.domain.UserUnauthorizedException
 import com.objectives.yearly.domain.UserAlreadyExistsException
 import com.objectives.yearly.domain.UserUniqueFieldTakenException
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
+import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -63,14 +65,14 @@ class ExceptionHandler {
     }
 
     @ExceptionHandler(UserUniqueFieldTakenException::class)
-    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleRegisterUserAlreadyExists(
         exception: UserUniqueFieldTakenException,
         request: HttpServletRequest
     ): GenericErrorDto {
         return GenericErrorDto(
-            status = HttpStatus.CONFLICT.value(),
-            error = HttpStatus.CONFLICT.name,
+            status = HttpStatus.BAD_REQUEST.value(),
+            error = HttpStatus.BAD_REQUEST.name,
             message = exception.message.toString(),
             path = request.servletPath
         )
@@ -94,6 +96,20 @@ class ExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     fun handleServerError(
         exception: Exception,
+        request: HttpServletRequest
+    ): GenericErrorDto {
+        return GenericErrorDto(
+            status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            error = HttpStatus.INTERNAL_SERVER_ERROR.name,
+            message = exception.message,
+            path = request.servletPath
+        )
+    }
+
+    @ExceptionHandler(RuntimeException::class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    fun handleServerError(
+        exception: RuntimeException,
         request: HttpServletRequest
     ): GenericErrorDto {
         return GenericErrorDto(

@@ -10,7 +10,8 @@ import com.objectives.yearly.domain.service.AuthenticationService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class AuthenticationControllerImpl(
@@ -20,7 +21,9 @@ class AuthenticationControllerImpl(
 
     override fun register(@Valid @RequestBody userRegisterDto: UserRegisterDto): ResponseEntity<Nothing> {
         service.register(userRegisterDto)
-        return  ResponseEntity.ok().build()
+        return ResponseEntity
+            .status(HttpStatus.CREATED).build()
+
     }
 
     override fun login(@Valid @RequestBody userLoginDto: UserLoginDto): ResponseEntity<AuthenticatedDto> {

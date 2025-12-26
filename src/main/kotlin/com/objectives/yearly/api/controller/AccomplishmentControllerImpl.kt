@@ -7,14 +7,11 @@ import com.objectives.yearly.api.dto.responses.AccomplishmentResponseDto
 import com.objectives.yearly.domain.service.AccomplishmentService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.net.URI
-import java.util.UUID
+import java.util.*
 
 @RestController
 class AccomplishmentControllerImpl(private val service: AccomplishmentService): AccomplishmentController {
@@ -28,5 +25,9 @@ class AccomplishmentControllerImpl(private val service: AccomplishmentService): 
 
     override fun getCurrentByObjective(@RequestParam objectiveId: UUID): List<AccomplishmentResponseDto> {
         return service.getCurrentByObjective(objectiveId)
+    }
+
+    override fun updateAccomplishment(accomplishmentId: UUID, accomplishment: AccomplishmentRequestDto): AccomplishmentResponseDto {
+        return service.updateById(accomplishmentId, accomplishment)
     }
 }

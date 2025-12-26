@@ -24,8 +24,9 @@ data class ObjectiveEntity(
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
     val user: UserEntity,
     @Enumerated(value = EnumType.STRING)
-    val type: ObjectiveType,
-    val name: String,
+    var type: ObjectiveType,
+    var name: String,
     val resourceId: UUID = UUID.randomUUID(),
-    val reversible: Boolean,
-    val targetAmount: Int) : AuditableEntity()
+    var reversible: Boolean,
+    var description: String? = null,
+    var targetAmount: Int) : AuditableEntity()

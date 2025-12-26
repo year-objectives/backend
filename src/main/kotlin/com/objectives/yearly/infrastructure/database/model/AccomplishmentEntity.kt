@@ -12,10 +12,11 @@ data class AccomplishmentEntity(
     @SequenceGenerator(name = "accomplishments_generator", sequenceName = "accomplishments_seq", allocationSize = 1)
     private val id: Long? = null,
     val resourceId: UUID = UUID.randomUUID(),
-    val doneAt: Long,
-    val done: Boolean,
+    var doneAt: Long? = null,
+    var done: Boolean,
     val minPossibleStart: Long,
     val maxPossibleStart: Long,
+    var description: String? = null,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "objective_id", nullable = false)
     val objective: ObjectiveEntity) : AuditableEntity()

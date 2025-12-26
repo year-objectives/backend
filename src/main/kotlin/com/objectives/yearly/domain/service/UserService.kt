@@ -20,8 +20,7 @@ class UserService(
     private val securityUtils: SecurityUtils) {
 
     fun changePassword(loginDto: UserLoginDto) {
-        val userId = securityUtils.getCurrentUserId()
-        val user = repository.findByResourceId(UUID.fromString(userId))
+        val user = getCurrentUser()
 
         user.password = mapper.getPasswordEncoded(loginDto.password)
 

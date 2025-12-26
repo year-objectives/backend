@@ -13,6 +13,8 @@ interface AccomplishmentRepository: JpaRepository<AccomplishmentEntity, Long> {
         maxTimestamp: Long,
         minTimestamp: Long
     ): List<AccomplishmentEntity>
+
+    fun findByResourceId(accomplishmentId: UUID): AccomplishmentEntity?
 }
 
 fun AccomplishmentRepository.findCurrentByObjective(

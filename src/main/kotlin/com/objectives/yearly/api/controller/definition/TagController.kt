@@ -2,8 +2,13 @@ package com.objectives.yearly.api.controller.definition
 
 import com.objectives.yearly.api.controller.utils.HttpHelpers
 import com.objectives.yearly.api.dto.requests.TagRequestDto
+import com.objectives.yearly.api.dto.responses.GenericErrorDto
 import com.objectives.yearly.api.dto.responses.TagResponseDto
+import com.objectives.yearly.api.dto.utils.OpenApiUtils
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.ArraySchema
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
@@ -26,8 +31,12 @@ interface TagController {
     )
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "200", description = "All tags"),
-            ApiResponse(responseCode = "500", description = "Internal Server Error")
+            ApiResponse(responseCode = "200", description = "All tags",
+                content = [Content(mediaType = "application/json", array = ArraySchema(schema = Schema(implementation = TagResponseDto::class)))]),
+            ApiResponse(responseCode = "401", description = "Unauthorized",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.UNAUTHORIZED_ERROR))]),
+            ApiResponse(responseCode = "500", description = "Internal Server Error",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.INTERNAL_SERVER_ERROR))])
         ]
     )
     @GetMapping
@@ -39,8 +48,14 @@ interface TagController {
     )
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "200", description = "Created tag"),
-            ApiResponse(responseCode = "500", description = "Internal Server Error")
+            ApiResponse(responseCode = "201", description = "Tag created",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = TagResponseDto::class))]),
+            ApiResponse(responseCode = "400", description = "Tag dto validation failed",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.BAD_REQUEST_ERROR))]),
+            ApiResponse(responseCode = "401", description = "Unauthorized",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.UNAUTHORIZED_ERROR))]),
+            ApiResponse(responseCode = "500", description = "Internal Server Error",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.INTERNAL_SERVER_ERROR))])
         ]
     )
     @PostMapping

@@ -7,7 +7,8 @@ import com.objectives.yearly.api.dto.responses.TagResponseDto
 import com.objectives.yearly.domain.service.TagService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 import java.net.URI
 
 @RestController

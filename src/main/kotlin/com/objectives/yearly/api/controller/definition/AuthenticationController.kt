@@ -5,7 +5,11 @@ import com.objectives.yearly.api.dto.requests.auth.UserLoginDto
 import com.objectives.yearly.api.dto.requests.auth.UserRefreshDto
 import com.objectives.yearly.api.dto.requests.auth.UserRegisterDto
 import com.objectives.yearly.api.dto.responses.AuthenticatedDto
+import com.objectives.yearly.api.dto.responses.GenericErrorDto
+import com.objectives.yearly.api.dto.utils.OpenApiUtils
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
@@ -26,9 +30,12 @@ interface AuthenticationController {
     )
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "201", description = "Registration Successful"),
-            ApiResponse(responseCode = "400", description = "Bad Request"),
-            ApiResponse(responseCode = "500", description = "Internal Server Error")
+
+            ApiResponse(responseCode = "201", description = "Registration Successful", content = []),
+            ApiResponse(responseCode = "400", description = "User registration dto validation failed",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.BAD_REQUEST_ERROR))]),
+            ApiResponse(responseCode = "500", description = "Internal Server Error",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.INTERNAL_SERVER_ERROR))])
         ]
     )
     @PostMapping("/register")
@@ -41,10 +48,12 @@ interface AuthenticationController {
     )
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "200", description = "Login Successful"),
-            ApiResponse(responseCode = "400", description = "Bad Request"),
-            ApiResponse(responseCode = "401", description = "Unauthorized"),
-            ApiResponse(responseCode = "500", description = "Internal Server Error")
+            ApiResponse(responseCode = "200", description = "Login Successful",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = AuthenticatedDto::class))]),
+            ApiResponse(responseCode = "400", description = "User login dto validation failed",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.BAD_REQUEST_ERROR))]),
+            ApiResponse(responseCode = "500", description = "Internal Server Error",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.INTERNAL_SERVER_ERROR))])
         ]
     )
     @PostMapping("/login")
@@ -57,9 +66,12 @@ interface AuthenticationController {
     )
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "200", description = "Refresh token"),
-            ApiResponse(responseCode = "400", description = "Bad Request"),
-            ApiResponse(responseCode = "500", description = "Internal Server Error")
+            ApiResponse(responseCode = "200", description = "Refresh tokens successful",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = AuthenticatedDto::class))]),
+            ApiResponse(responseCode = "400", description = "User login dto validation failed",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.BAD_REQUEST_ERROR))]),
+            ApiResponse(responseCode = "500", description = "Internal Server Error",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.INTERNAL_SERVER_ERROR))])
         ]
     )
     @PostMapping("/refresh-token")
@@ -72,9 +84,13 @@ interface AuthenticationController {
     )
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "200", description = "Logout Successful"),
-            ApiResponse(responseCode = "400", description = "Bad Request"),
-            ApiResponse(responseCode = "500", description = "Internal Server Error")
+            ApiResponse(responseCode = "200", description = "Logout successful"),
+            ApiResponse(responseCode = "400", description = "User logout dto validation failed",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.BAD_REQUEST_ERROR))]),
+            ApiResponse(responseCode = "401", description = "Unauthorized",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.UNAUTHORIZED_ERROR))]),
+            ApiResponse(responseCode = "500", description = "Internal Server Error",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.INTERNAL_SERVER_ERROR))])
         ]
     )
     @SecurityRequirement(name = "bearerAuth")

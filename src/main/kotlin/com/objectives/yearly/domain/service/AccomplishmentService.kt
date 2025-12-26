@@ -40,9 +40,20 @@ class AccomplishmentService(
     }
 
     fun getCurrentByObjective(objectiveId: UUID): List<AccomplishmentResponseDto> {
-        val currentTimeStamp = Instant.now().epochSecond
+        return mapper.toApi(repository.findCurrentByObjective(objectiveId, Instant.now().toEpochMilli()))
+    }
 
-        return mapper.toApi(repository.findCurrentByObjective(objectiveId, currentTimeStamp))
+    fun updateById(accomplishmentId: UUID, accomplishmentDto: AccomplishmentRequestDto): AccomplishmentResponseDto {
+        val accomplishment = repository.findByResourceId(accomplishmentId)
+            ?: throw ResourceNotFoundException("Accomplishment with id $accomplishmentId not found")
+
+        val doneAt = if(accomplishment.done) accomplishmentDto.doneAt else null
+        accomplishment.doneAt = doneAt
+        accomplishment.done = accomplishmentDto.done
+        accomplishment.description = accomplishmentDto.description
+
+        val savedAccomplishment = repository.save(accomplishment)
+        return mapper.toApi(savedAccomplishment)
     }
 
 }

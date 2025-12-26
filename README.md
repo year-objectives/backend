@@ -1,13 +1,25 @@
 # Yearly Objectives backend
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
-
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+This project provides a REST Api to manage yearly objectives persistence backend
 
 ## Running the application in dev mode
 
-You can run your application in dev mode that enables live coding using:
+You can run your application locally in dev mode byt first starting the local containers
 
 ```sh
-./mvnw clean spring-boot:run
+docker compose up -d
+./gradlew bootRun --args='--spring.profiles.active=dev'
 ```
+
+## Running with debug
+
+```sh
+./gradlew bootRun --args='--spring.profiles.active=dev --debug'
+```
+
+## Accessing through swagger
+
+To access the api there is a [swagger page](http://localhost:8080/api/v1/swagger-ui/index.html) to try the API and check its documentation.
+
+Furthermore, there is a [hoppscotsch collection](./yearly.json) file that you can load and run the requests.
+This file will be maintained in the future as development and testing tool.

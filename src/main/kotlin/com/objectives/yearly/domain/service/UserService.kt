@@ -31,8 +31,8 @@ class UserService(
 
     fun userDetails(userDto: UserDto): UserResponseDto {
          when {
-            repository.existsByEmail(userDto.email) -> throw UserUniqueFieldTakenException("email", "Email being updated already exists")
-            repository.existsByUsername(userDto.username) -> throw UserUniqueFieldTakenException("username", "Username being updated already exists")
+            repository.existsByEmail(userDto.email) -> throw UserUniqueFieldTakenException("Email being updated already exists")
+            repository.existsByUsername(userDto.username) -> throw UserUniqueFieldTakenException("Username being updated already exists")
         }
 
         val user = getCurrentUser()
@@ -50,6 +50,6 @@ class UserService(
         return mapper.toApi(user)
     }
 
-    private fun getCurrentUser(): UserEntity = repository.findByResourceId(UUID.fromString(securityUtils.getCurrentUserId()))
+    fun getCurrentUser(): UserEntity = repository.findByResourceId(UUID.fromString(securityUtils.getCurrentUserId()))
 
 }

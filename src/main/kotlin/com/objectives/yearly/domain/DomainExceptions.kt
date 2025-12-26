@@ -4,7 +4,8 @@ class UserUnauthorizedException(override val message: String?) : RuntimeExceptio
 
 class UserNotFoundException(override val message: String?) : RuntimeException(message)
 
-class UserAlreadyExistsException(override val message: String?) : IllegalArgumentException(message)
+class UserAlreadyExistsException(override val message: String?) : RuntimeException(message)
 
-class UserUniqueFieldTakenException(val filedName: String, override val message: String?) : IllegalArgumentException(message)
+class UserUniqueFieldTakenException(override val message: String?) : IllegalArgumentException(message)
 
+class ResourceNotFoundException(override val message: String?) : RuntimeException(message)

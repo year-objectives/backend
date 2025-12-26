@@ -20,7 +20,7 @@ data class ObjectiveEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "objectives_generator")
     @SequenceGenerator(name = "objectives_generator", sequenceName = "objectives_seq", allocationSize = 1)
-    val id: Long? = null,
+    private val id: Long? = null,
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
     val user: UserEntity,
     @Enumerated(value = EnumType.STRING)

@@ -97,11 +97,31 @@
             </column>
         </createTable>
 
+        <createTable tableName="tags">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="tags_pk" nullable="false" />
+            </column>
+            <column name="resource_id" type="uuid">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+            <column name="updated_at" type="timestamp without time zone">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
         <createSequence dataType="bigint" incrementBy="1" sequenceName="objectives_seq" startValue="1"/>
 
         <createSequence dataType="bigint" incrementBy="1" sequenceName="users_seq" startValue="1"/>
 
         <createSequence dataType="bigint" incrementBy="1" sequenceName="accomplishments_seq" startValue="1"/>
+
+        <createSequence dataType="bigint" incrementBy="1" sequenceName="tags_seq" startValue="1"/>
 
         <addUniqueConstraint
                 tableName="objectives"

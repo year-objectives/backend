@@ -9,14 +9,19 @@ import org.springframework.stereotype.Service
 @Service
 class ObjectiveService(
     val repository: ObjectiveRepository,
-    val mapper: ObjectiveMapper) {
+    val mapper: ObjectiveMapper,
+    val userService: UserService) {
 
 
     fun listAll(): List<ObjectiveResponseDto> {
-        return mapper.toApi(repository.findAll())
+        val currentUser = userService.getCurrentUser()
+        return mapper.toApi(repository.findByUser(currentUser))
     }
 
     fun registerObjective(objective: ObjectiveRequestDto): ObjectiveResponseDto {
-        TODO()
+        val currentUser = userService.getCurrentUser();
+        val objectiveToSave = mapper.toModel(objective, currentUser)
+        val savedObjective = repository.save(objectiveToSave)
+        return mapper.toApi(savedObjective)
     }
 }

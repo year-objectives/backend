@@ -10,9 +10,9 @@ data class AccomplishmentEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "accomplishments_generator")
     @SequenceGenerator(name = "accomplishments_generator", sequenceName = "accomplishments_seq", allocationSize = 1)
-    val id: Long? = null,
+    private val id: Long? = null,
     val resourceId: UUID = UUID.randomUUID(),
-    val doneAt: Long = Instant.now().toEpochMilli(),
+    val doneAt: Long,
     val done: Boolean,
     val minPossibleStart: Long,
     val maxPossibleStart: Long,

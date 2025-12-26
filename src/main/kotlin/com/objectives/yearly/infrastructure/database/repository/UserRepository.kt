@@ -2,8 +2,10 @@ package com.objectives.yearly.infrastructure.database.repository
 
 import com.objectives.yearly.infrastructure.database.model.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
-import java.util.UUID
+import org.springframework.stereotype.Repository
+import java.util.*
 
+@Repository
 interface UserRepository: JpaRepository<UserEntity, Long>  {
 
     fun findByUsername(username: String): UserEntity?

@@ -1,20 +1,36 @@
 package com.objectives.yearly.domain.mapper
 
+import com.objectives.yearly.api.dto.requests.ObjectiveRequestDto
 import com.objectives.yearly.api.dto.responses.ObjectiveResponseDto
 import com.objectives.yearly.domain.mapper.utils.ApiToModel
 import com.objectives.yearly.domain.mapper.utils.ModelToApi
 import com.objectives.yearly.infrastructure.database.model.ObjectiveEntity
+import com.objectives.yearly.infrastructure.database.model.ObjectiveType
+import com.objectives.yearly.infrastructure.database.model.UserEntity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import org.springframework.stereotype.Component
+import java.util.UUID
 
 @Component
-class ObjectiveMapper:  ModelToApi<ObjectiveEntity, ObjectiveResponseDto>, ApiToModel<ObjectiveResponseDto, ObjectiveEntity> {
+class ObjectiveMapper(private val objectiveTypeMapper: ObjectiveTypeMapper):  ModelToApi<ObjectiveEntity, ObjectiveResponseDto> {
 
-    override fun toModel(dto: ObjectiveResponseDto): ObjectiveEntity {
-        TODO()
+    fun toModel(dto: ObjectiveRequestDto, user: UserEntity): ObjectiveEntity {
+        return ObjectiveEntity(
+            name = dto.name,
+            type = objectiveTypeMapper.toInfrastructure(dto.type),
+            reversible = dto.reversible,
+            targetAmount = dto.targetAmount,
+            user = user)
     }
 
     override fun toApi(model: ObjectiveEntity): ObjectiveResponseDto {
-        return ObjectiveResponseDto(model.resourceId, model.name, model.type.toString(), model.reversible, model.targetAmount)
+        return ObjectiveResponseDto(
+            id = model.resourceId,
+            name = model.name,
+            type = model.type.toString(),
+            reversible = model.reversible,
+            targetAmount = model.targetAmount)
 
     }
 

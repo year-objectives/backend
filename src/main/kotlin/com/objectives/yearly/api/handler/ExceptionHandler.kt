@@ -1,6 +1,7 @@
 package com.objectives.yearly.api.handler
 
 import com.objectives.yearly.api.dto.responses.GenericErrorDto
+import com.objectives.yearly.domain.ResourceNotFoundException
 import com.objectives.yearly.domain.UserUnauthorizedException
 import com.objectives.yearly.domain.UserAlreadyExistsException
 import com.objectives.yearly.domain.UserUniqueFieldTakenException
@@ -75,7 +76,19 @@ class ExceptionHandler {
         )
     }
 
-
+    @ExceptionHandler(ResourceNotFoundException::class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    fun handleGenericApiResourceNotFound(
+        exception: ResourceNotFoundException,
+        request: HttpServletRequest
+    ): GenericErrorDto {
+        return GenericErrorDto(
+            status = HttpStatus.NOT_FOUND.value(),
+            error = HttpStatus.NOT_FOUND.name,
+            message = exception.message.toString(),
+            path = request.servletPath
+        )
+    }
 
     @ExceptionHandler(Exception::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

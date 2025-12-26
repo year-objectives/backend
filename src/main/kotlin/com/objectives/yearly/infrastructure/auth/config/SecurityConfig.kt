@@ -1,5 +1,6 @@
 package com.objectives.yearly.infrastructure.auth.config
 
+import com.objectives.yearly.api.controller.utils.HttpHelpers
 import com.objectives.yearly.infrastructure.auth.CustomUserDetailsService
 import com.objectives.yearly.infrastructure.auth.JwtAuthFilter
 import org.springframework.context.annotation.Bean
@@ -31,7 +32,11 @@ class SecurityConfig(
             .csrf { it.disable() }
             .authorizeHttpRequests { auth ->
                 auth
-                    .requestMatchers("/auth/register", "/auth/login", "/auth/refresh-token").permitAll()
+                    .requestMatchers(
+                        HttpHelpers.AUTHENTICATION + "/register",
+                        HttpHelpers.AUTHENTICATION + "/login",
+                        HttpHelpers.AUTHENTICATION + "/refresh-token").permitAll()
+                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated()
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }

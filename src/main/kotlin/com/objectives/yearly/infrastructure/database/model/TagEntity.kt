@@ -20,7 +20,11 @@ data class TagEntity(
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tags_generator")
     @SequenceGenerator(name = "tags_generator", sequenceName = "tags_seq", allocationSize = 1)
     private val id: Long? = null,
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
     val user: UserEntity,
+
     val name: String,
-    val resourceId: UUID = UUID.randomUUID()) : AuditableEntity()
+
+    val resourceId: UUID = UUID.randomUUID()
+) : AuditableEntity()

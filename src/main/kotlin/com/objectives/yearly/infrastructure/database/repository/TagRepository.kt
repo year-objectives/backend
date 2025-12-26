@@ -4,10 +4,12 @@ import com.objectives.yearly.infrastructure.database.model.TagEntity
 import com.objectives.yearly.infrastructure.database.model.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
+import java.util.UUID
 
 @Repository
-interface TagsRepository: JpaRepository<TagEntity, Long> {
+interface TagRepository: JpaRepository<TagEntity, Long> {
 
     fun findByUser(currentUser: UserEntity): List<TagEntity>
+    fun findByResourceId(tagId: UUID): TagEntity?
 
 }

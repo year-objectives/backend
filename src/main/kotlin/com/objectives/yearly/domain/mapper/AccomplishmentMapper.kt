@@ -12,5 +12,4 @@ class AccomplishmentMapper:  ModelToApi<AccomplishmentEntity, AccomplishmentResp
         return AccomplishmentResponseDto(model.resourceId, model.objective.resourceId, model.doneAt, model.done)
     }
 
-
 }

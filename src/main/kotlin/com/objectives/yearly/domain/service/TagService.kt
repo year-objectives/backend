@@ -3,12 +3,13 @@ package com.objectives.yearly.domain.service
 import com.objectives.yearly.api.dto.requests.TagRequestDto
 import com.objectives.yearly.api.dto.responses.TagResponseDto
 import com.objectives.yearly.domain.mapper.TagMapper
-import com.objectives.yearly.infrastructure.database.repository.TagsRepository
+import com.objectives.yearly.infrastructure.database.repository.TagRepository
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 @Service
 class TagService(
-    val repository: TagsRepository,
+    val repository: TagRepository,
     val mapper: TagMapper,
     val userService: UserService) {
 

@@ -21,4 +21,5 @@ data class UserEntity(
     var username: String,
     var email: String,
     var password: String,
-    val authorities: List<GrantedAuthority> = emptyList()) : AuditableEntity()
+    val authorities: List<GrantedAuthority> = emptyList()
+) : AuditableEntity()

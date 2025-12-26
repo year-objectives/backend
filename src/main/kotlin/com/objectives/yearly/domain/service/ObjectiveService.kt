@@ -6,7 +6,9 @@ import com.objectives.yearly.domain.ResourceNotFoundException
 import com.objectives.yearly.domain.entity.ObjectiveType
 import com.objectives.yearly.domain.mapper.ObjectiveMapper
 import com.objectives.yearly.domain.mapper.ObjectiveTypeMapper
+import com.objectives.yearly.infrastructure.database.model.TagEntity
 import com.objectives.yearly.infrastructure.database.repository.ObjectiveRepository
+import com.objectives.yearly.infrastructure.database.repository.TagRepository
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -15,11 +17,14 @@ class ObjectiveService(
     val repository: ObjectiveRepository,
     val mapper: ObjectiveMapper,
     val userService: UserService,
-    val typeMapper: ObjectiveTypeMapper) {
+    val typeMapper: ObjectiveTypeMapper,
+    val tagRepository: TagRepository) {
 
     fun registerObjective(objective: ObjectiveRequestDto): ObjectiveResponseDto {
         val currentUser = userService.getCurrentUser()
-        val objectiveToSave = mapper.toModel(objective, currentUser)
+        val tagsEntity = objective.tags.map { tagId -> tagRepository.findByResourceId(tagId)
+            ?: throw ResourceNotFoundException("Tag not found: $tagId") }.toMutableList()
+        val objectiveToSave = mapper.toModel(objective, currentUser, tagsEntity)
         val savedObjective = repository.save(objectiveToSave)
         return mapper.toApi(savedObjective)
     }
@@ -41,11 +46,15 @@ class ObjectiveService(
         val objective = repository.findByResourceId(objectiveId)
             ?: throw ResourceNotFoundException("Object with id $objectiveId not found")
 
+        val tagsEntity = objectiveDto.tags.map { tagId -> tagRepository.findByResourceId(tagId)
+            ?: throw ResourceNotFoundException("Tag not found: $tagId") }.toMutableList()
+
         objective.type = typeMapper.toInfrastructure(objectiveDto.type)
         objective.name = objectiveDto.name
         objective.description = objectiveDto.description
         objective.reversible = objectiveDto.reversible
         objective.targetAmount = objectiveDto.targetAmount
+        objective.tags = tagsEntity
 
         val savedObjective = repository.save(objective)
         return mapper.toApi(savedObjective)

@@ -2,6 +2,7 @@ package com.objectives.yearly.domain.service
 
 import com.objectives.yearly.api.controller.utils.SecurityUtils
 import com.objectives.yearly.api.dto.requests.UserDto
+import com.objectives.yearly.api.dto.requests.UserPasswordDto
 import com.objectives.yearly.api.dto.requests.auth.UserLoginDto
 import com.objectives.yearly.api.dto.responses.UserResponseDto
 import com.objectives.yearly.domain.UserUniqueFieldTakenException
@@ -19,10 +20,10 @@ class UserService(
     private val refreshTokenService: RefreshTokenService,
     private val securityUtils: SecurityUtils) {
 
-    fun changePassword(loginDto: UserLoginDto) {
+    fun changePassword(userPasswordDto: UserPasswordDto) {
         val user = getCurrentUser()
 
-        user.password = mapper.getPasswordEncoded(loginDto.password)
+        user.password = mapper.getPasswordEncoded(userPasswordDto.password)
 
         refreshTokenService.invalidateAllUserTokens(user.resourceId)
         repository.save(user)

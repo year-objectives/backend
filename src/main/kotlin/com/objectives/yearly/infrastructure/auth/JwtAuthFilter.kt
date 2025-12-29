@@ -10,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
-import org.springframework.web.servlet.HandlerExecutionChain
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
 
 @Component
@@ -41,7 +40,7 @@ class JwtAuthFilter(
                 return
             }
 
-            val userId = accessTokenService.getUserId(token)
+            val userId = accessTokenService.getTokenSubject(token)
 
             val authentication = UsernamePasswordAuthenticationToken(
                 userId,

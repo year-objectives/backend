@@ -14,13 +14,10 @@ class CustomUserDetailsService(
     private val userRepository: UserRepository
 ) : UserDetailsService {
 
-    private val logger = LoggerFactory.getLogger(this::class.java)
-
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userRepository.findByUsername(username)
             ?: throw UserNotFoundException("User not found")
 
-        logger.info("Found user: ${user.email}, password hash: ${user.password.take(10)}...")
         return User(user.username, user.password, user.authorities)
     }
 }

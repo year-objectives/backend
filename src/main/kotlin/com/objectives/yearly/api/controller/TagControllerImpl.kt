@@ -18,7 +18,7 @@ class TagControllerImpl(private val service: TagService): TagController {
         return service.getAll()
     }
 
-    override fun registerNew(@Valid @RequestBody requestDto: TagRequestDto): ResponseEntity<TagResponseDto> {
+    override fun registerNew(requestDto: TagRequestDto): ResponseEntity<TagResponseDto> {
         val newTag =  service.registerNew(requestDto)
         return ResponseEntity
             .created(URI.create(HttpHelpers.OBJECTIVES+"/" + newTag.id))

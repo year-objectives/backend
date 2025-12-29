@@ -16,14 +16,14 @@ import java.util.*
 @RestController
 class AccomplishmentControllerImpl(private val service: AccomplishmentService): AccomplishmentController {
 
-    override fun registerAccomplishment(@RequestBody @Valid accomplishment: AccomplishmentRequestDto): ResponseEntity<AccomplishmentResponseDto> {
+    override fun registerAccomplishment(accomplishment: AccomplishmentRequestDto): ResponseEntity<AccomplishmentResponseDto> {
         val accomplishment = service.registerAccomplishment(accomplishment)
         return ResponseEntity
             .created(URI.create(HttpHelpers.OBJECTIVES+"/" + accomplishment.id))
             .body(accomplishment)
     }
 
-    override fun getCurrentByObjective(@RequestParam objectiveId: UUID): List<AccomplishmentResponseDto> {
+    override fun getCurrentByObjective(objectiveId: UUID): List<AccomplishmentResponseDto> {
         return service.getCurrentByObjective(objectiveId)
     }
 

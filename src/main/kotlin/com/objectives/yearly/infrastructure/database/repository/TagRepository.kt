@@ -11,5 +11,6 @@ interface TagRepository: JpaRepository<TagEntity, Long> {
 
     fun findByUser(currentUser: UserEntity): List<TagEntity>
     fun findByResourceId(tagId: UUID): TagEntity?
+    fun existsByNameAndUserResourceId(name: String,resourceId: UUID): Boolean
 
 }

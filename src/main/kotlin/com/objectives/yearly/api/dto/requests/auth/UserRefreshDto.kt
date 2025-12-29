@@ -10,6 +10,6 @@ import jakarta.validation.constraints.NotBlank
     examples = [OpenApiUtils.RequestDtoExamples.USER_REFRESH]
 )
 data class UserRefreshDto(
-    @field:Schema(description = "User's refresh token id", required = true)
+    @field:Schema(description = "User's refresh token", required = true)
     @field:NotBlank(message = "Refresh token is mandatory")
-    val refreshTokenId: String)
+    val refreshToken: String)

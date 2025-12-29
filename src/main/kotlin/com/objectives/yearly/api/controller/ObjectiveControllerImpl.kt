@@ -16,7 +16,7 @@ import java.util.UUID
 @RestController
 class ObjectiveControllerImpl(private val service: ObjectiveService): ObjectiveController {
 
-    override fun registerObjective(@RequestBody @Valid objective: ObjectiveRequestDto): ResponseEntity<ObjectiveResponseDto> {
+    override fun registerObjective(objective: ObjectiveRequestDto): ResponseEntity<ObjectiveResponseDto> {
         val objective = service.registerObjective(objective)
         return ResponseEntity
             .created(URI.create(HttpHelpers.OBJECTIVES+"/" + objective.id))
@@ -33,5 +33,9 @@ class ObjectiveControllerImpl(private val service: ObjectiveService): ObjectiveC
 
     override fun updateObjective(objectiveId: UUID, objective: ObjectiveRequestDto): ObjectiveResponseDto {
         return service.updateById(objectiveId, objective)
+    }
+
+    override fun deleteObjective(objectiveId: UUID) {
+        service.deleteById(objectiveId)
     }
 }

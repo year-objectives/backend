@@ -19,22 +19,22 @@ class AuthenticationControllerImpl(
 ): AuthenticationController {
 
 
-    override fun register(@Valid @RequestBody userRegisterDto: UserRegisterDto): ResponseEntity<Nothing> {
+    override fun register(userRegisterDto: UserRegisterDto): ResponseEntity<Nothing> {
         service.register(userRegisterDto)
         return ResponseEntity
             .status(HttpStatus.CREATED).build()
 
     }
 
-    override fun login(@Valid @RequestBody userLoginDto: UserLoginDto): ResponseEntity<AuthenticatedDto> {
+    override fun login(userLoginDto: UserLoginDto): ResponseEntity<AuthenticatedDto> {
         return ResponseEntity.ok(service.login(userLoginDto))
     }
 
-    override fun refreshAuthToken(@Valid @RequestBody userRefreshDto: UserRefreshDto): ResponseEntity<AuthenticatedDto> {
+    override fun refreshAuthToken(userRefreshDto: UserRefreshDto): ResponseEntity<AuthenticatedDto> {
         return ResponseEntity.ok(service.refreshAuthToken(userRefreshDto))
     }
 
-    override fun logout(@Valid @RequestBody userRefreshDto: UserRefreshDto): ResponseEntity<Nothing> {
+    override fun logout(userRefreshDto: UserRefreshDto): ResponseEntity<Nothing> {
         service.logout(userRefreshDto)
         return ResponseEntity.ok().build()
     }

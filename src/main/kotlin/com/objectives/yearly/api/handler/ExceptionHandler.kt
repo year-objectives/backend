@@ -2,13 +2,11 @@ package com.objectives.yearly.api.handler
 
 import com.objectives.yearly.api.dto.responses.GenericErrorDto
 import com.objectives.yearly.domain.ResourceNotFoundException
-import com.objectives.yearly.domain.UnauthorizedUserException
-import com.objectives.yearly.domain.UserUnauthorizedException
 import com.objectives.yearly.domain.UserAlreadyExistsException
+import com.objectives.yearly.domain.UserUnauthorizedException
 import com.objectives.yearly.domain.UserUniqueFieldTakenException
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
-import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -87,6 +85,20 @@ class ExceptionHandler {
         return GenericErrorDto(
             status = HttpStatus.NOT_FOUND.value(),
             error = HttpStatus.NOT_FOUND.name,
+            message = exception.message.toString(),
+            path = request.servletPath
+        )
+    }
+
+    @ExceptionHandler(UnsupportedOperationException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleUnsupportedOperationException(
+        exception: UnsupportedOperationException,
+        request: HttpServletRequest
+    ): GenericErrorDto {
+        return GenericErrorDto(
+            status = HttpStatus.BAD_REQUEST.value(),
+            error = HttpStatus.BAD_REQUEST.name,
             message = exception.message.toString(),
             path = request.servletPath
         )

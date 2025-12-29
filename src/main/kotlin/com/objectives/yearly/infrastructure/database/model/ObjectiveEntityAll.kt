@@ -1,14 +1,26 @@
 package com.objectives.yearly.infrastructure.database.model
 
-import jakarta.persistence.*
-import org.hibernate.annotations.SQLRestriction
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.FetchType
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.JoinTable
+import jakarta.persistence.ManyToMany
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.SequenceGenerator
+import jakarta.persistence.Table
+import java.time.Instant
 import java.util.*
 import java.util.Collections.emptyList
 
 @Entity
 @Table(name = "objectives")
-@SQLRestriction("finished = false")
-data class ObjectiveEntity(
+data class ObjectiveEntityAll(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "objectives_generator")
     @SequenceGenerator(name = "objectives_generator", sequenceName = "objectives_seq", allocationSize = 1)
@@ -34,5 +46,5 @@ data class ObjectiveEntity(
     @JoinTable(name = "objectives_tags", joinColumns = [JoinColumn(name = "objective_id")], inverseJoinColumns = [JoinColumn(name = "tag_id")])
     var tags: MutableList<TagEntity> = emptyList(),
 
-    var finished: Boolean = false
+    val finished: Boolean
 ) : AuditableEntity()

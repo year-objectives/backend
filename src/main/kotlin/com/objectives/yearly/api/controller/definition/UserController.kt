@@ -2,6 +2,7 @@ package com.objectives.yearly.api.controller.definition
 
 import com.objectives.yearly.api.controller.utils.HttpHelpers
 import com.objectives.yearly.api.dto.requests.UserDto
+import com.objectives.yearly.api.dto.requests.UserPasswordDto
 import com.objectives.yearly.api.dto.requests.auth.UserLoginDto
 import com.objectives.yearly.api.dto.responses.GenericErrorDto
 import com.objectives.yearly.api.dto.responses.UserResponseDto
@@ -41,7 +42,7 @@ interface UserController {
         ]
     )
     @PutMapping("/password")
-    fun changePassword(@Valid @RequestBody loginDto: UserLoginDto): ResponseEntity<Nothing>
+    fun changePassword(@Valid @RequestBody userPasswordDto: UserPasswordDto): ResponseEntity<Nothing>
 
     @Operation(
         summary = "Update user details",

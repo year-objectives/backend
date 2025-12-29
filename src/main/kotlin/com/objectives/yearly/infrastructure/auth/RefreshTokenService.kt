@@ -12,7 +12,8 @@ import java.util.concurrent.TimeUnit
 @Service
 class RefreshTokenService(
     private val redisTemplate: RedisTemplate<String, String>,
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
+    private val accessTokenService: AccessTokenService
 ) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
@@ -27,7 +28,7 @@ class RefreshTokenService(
     
     fun generateToken(userId: UUID): String {
         logger.info("Generating token for user {}", userId)
-        val tokenId = UUID.randomUUID().toString()
+        val tokenId = UUID.randomUUID()
         val tokenData = RefreshTokenEntity(userId, System.currentTimeMillis())
 
         logger.debug("Setting token with id {} in refresh", tokenId)
@@ -40,7 +41,7 @@ class RefreshTokenService(
         logger.debug("Token set in refresh")
 
         logger.debug("Adding token with id {} in user_tokens", tokenId)
-        redisTemplate.opsForSet().add("$USER_TOKENS_PREFIX$userId", tokenId)
+        redisTemplate.opsForSet().add("$USER_TOKENS_PREFIX$userId", tokenId.toString())
         logger.debug("Token add in user_tokens")
 
         logger.debug("Set expiration user_tokens")
@@ -48,10 +49,11 @@ class RefreshTokenService(
         logger.debug("Expiration set in user_tokens")
 
         logger.info("Token for user {} generated with id {}", userId, tokenId)
-        return tokenId
+        return accessTokenService.generateToken(tokenId, refreshExpiration)
     }
     
-    fun validateAndGetUserId(tokenId: String): UUID? {
+    fun validateAndGetUserId(token: String): UUID? {
+        val tokenId = accessTokenService.getTokenSubject(token)
         logger.info("Validating token with id {}", tokenId)
         val data = redisTemplate.opsForValue().get("$REFRESH_TOKEN_PREFIX$tokenId") ?: return null
         logger.debug("User token with id {} retrieved from Redis", tokenId)
@@ -65,7 +67,8 @@ class RefreshTokenService(
         }
     }
     
-    fun invalidateToken(tokenId: String) {
+    fun invalidateToken(token: String) {
+        val tokenId = accessTokenService.getTokenSubject(token)
         logger.info("Invalidating token with id {}", tokenId)
         val redisRefreshKey = "$REFRESH_TOKEN_PREFIX$tokenId"
         val data = redisTemplate.opsForValue().get(redisRefreshKey)

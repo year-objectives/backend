@@ -59,4 +59,10 @@ class ObjectiveService(
         val savedObjective = repository.save(objective)
         return mapper.toApi(savedObjective)
     }
+
+    fun deleteById(objectiveId: UUID) {
+        val objective = repository.findByResourceId(objectiveId) ?: return
+        objective.finished = true
+        repository.save(objective)
+    }
 }

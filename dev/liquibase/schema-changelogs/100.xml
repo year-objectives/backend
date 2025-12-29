@@ -42,6 +42,9 @@
             <column name="resource_id" type="uuid">
                 <constraints nullable="false" unique="true"/>
             </column>
+            <column name="finished" type="boolean">
+                <constraints nullable="false"/>
+            </column>
             <column name="user_id" type="bigint">
                 <constraints foreignKeyName="user_id"
                              referencedTableName="users" referencedColumnNames="id"/>
@@ -115,6 +118,10 @@
             <column name="updated_at" type="timestamp without time zone">
                 <constraints nullable="false" />
             </column>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="user_id"
+                             referencedTableName="users" referencedColumnNames="id"/>
+            </column>
         </createTable>
 
         <createSequence dataType="bigint" incrementBy="1" sequenceName="objectives_seq" startValue="1"/>
@@ -127,8 +134,13 @@
 
         <addUniqueConstraint
                 tableName="objectives"
+                columnNames="name, user_id, finished"
+                constraintName="uk_objectives_name_user_id"/>
+
+        <addUniqueConstraint
+                tableName="tags"
                 columnNames="name, user_id"
-                constraintName="uk_name_user_id"/>
+                constraintName="uk_tags_name_user_id"/>
 
 
         <createTable tableName="objectives_tags">

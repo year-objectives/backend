@@ -1,6 +1,5 @@
 package com.objectives.yearly.domain
 
-import org.springframework.security.core.AuthenticationException
 
 class UserUnauthorizedException(override val message: String?) : RuntimeException(message)
 
@@ -12,4 +11,4 @@ class UserUniqueFieldTakenException(override val message: String?) : IllegalArgu
 
 class ResourceNotFoundException(override val message: String?) : RuntimeException(message)
 
-class UnauthorizedUserException(override val message: String?) : AuthenticationException(message)
+class UnsupportedOperationException(override val message: String?) : RuntimeException(message)

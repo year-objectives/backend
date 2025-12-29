@@ -23,24 +23,19 @@ class AuthenticationService(
     private val accessTokenService: AccessTokenService,
     private val refreshTokenService: RefreshTokenService,
     private val userMapper: UserMapper,
-    private val authenticationManager: AuthenticationManager,
-    private val passwordEncoder: PasswordEncoder
+    private val authenticationManager: AuthenticationManager
 ) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    fun register(userRegisterDto: UserRegisterDto): AuthenticatedDto {
+    fun register(userRegisterDto: UserRegisterDto) {
         require(!userRepository.existsByUsernameOrEmail(userRegisterDto.username, userRegisterDto.email)) {
             throw UserAlreadyExistsException("User already exists")
         }
 
         val user = userMapper.toModel(userRegisterDto)
 
-        val savedUser = userRepository.save(user)
-        return AuthenticatedDto(
-            authToken = accessTokenService.generateToken(savedUser.resourceId),
-            refreshTokenId = refreshTokenService.generateToken(savedUser.resourceId)
-        )
+        userRepository.save(user)
     }
 
     fun login(userLoginDto: UserLoginDto): AuthenticatedDto {
@@ -53,25 +48,23 @@ class AuthenticationService(
 
         return AuthenticatedDto(
             authToken = accessTokenService.generateToken(user.resourceId),
-            refreshTokenId = refreshTokenService.generateToken(user.resourceId)
+            refreshToken = refreshTokenService.generateToken(user.resourceId)
         )
     }
 
     fun refreshAuthToken(userRefreshDto: UserRefreshDto): AuthenticatedDto {
-        val username = refreshTokenService.validateAndGetUserId(userRefreshDto.refreshTokenId)
+        val userId = refreshTokenService.validateAndGetUserId(userRefreshDto.refreshToken)
             ?: throw UserUnauthorizedException("Unauthorized user")
 
-
-        refreshTokenService.invalidateToken(userRefreshDto.refreshTokenId)
-
+        refreshTokenService.invalidateToken(userRefreshDto.refreshToken)
 
         return AuthenticatedDto(
-            authToken = accessTokenService.generateToken(username),
-            refreshTokenId = refreshTokenService.generateToken(username)
+            authToken = accessTokenService.generateToken(userId),
+            refreshToken = refreshTokenService.generateToken(userId)
         )
     }
 
     fun logout(userRefreshDto: UserRefreshDto) {
-        refreshTokenService.invalidateToken(userRefreshDto.refreshTokenId)
+        refreshTokenService.invalidateToken(userRefreshDto.refreshToken)
     }
 }

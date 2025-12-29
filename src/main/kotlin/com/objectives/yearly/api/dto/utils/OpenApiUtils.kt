@@ -21,6 +21,7 @@ object OpenApiUtils {
             const val OBJECTIVE = "ObjectiveRequestDto"
             const val TAG = "TagRequestDto"
             const val USER = "UserRequestDto"
+            const val USER_PASSWORD = "UserRequestDto"
         }
     }
 
@@ -75,6 +76,11 @@ object OpenApiUtils {
                   "last_name": "doe",
                   "email": "email@domai.com",
                   "username": "mamima"
+                }
+            """
+            const val USER_PASSWORD = """
+                {
+                  "password": "12345"
                 }
             """
         }

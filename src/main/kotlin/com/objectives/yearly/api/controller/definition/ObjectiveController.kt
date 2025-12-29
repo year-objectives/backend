@@ -7,6 +7,8 @@ import com.objectives.yearly.api.dto.responses.ObjectiveResponseDto
 import com.objectives.yearly.api.dto.utils.OpenApiUtils
 import com.objectives.yearly.domain.entity.ObjectiveType
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.enums.ParameterIn
 import io.swagger.v3.oas.annotations.media.ArraySchema
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -16,6 +18,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -66,7 +69,9 @@ interface ObjectiveController {
         ]
     )
     @GetMapping
-    fun getAll(@RequestParam type: ObjectiveType?): List<ObjectiveResponseDto>
+    fun getAll(
+        @Parameter(name = "type", `in` = ParameterIn.QUERY)
+        @RequestParam type: ObjectiveType?): List<ObjectiveResponseDto>
 
     @Operation(
         summary = "Get objective by id",
@@ -86,7 +91,9 @@ interface ObjectiveController {
         ]
     )
     @GetMapping("/{id}")
-    fun getById(@PathVariable("id") objectiveId: UUID): ObjectiveResponseDto
+    fun getById(
+        @Parameter(name = "id", `in` = ParameterIn.PATH)
+        @PathVariable("id") objectiveId: UUID): ObjectiveResponseDto
 
     @Operation(
         summary = "Update an objective",
@@ -95,7 +102,7 @@ interface ObjectiveController {
     @ApiResponses(
         value = [
 
-            ApiResponse(responseCode = "20", description = "Objective updated",
+            ApiResponse(responseCode = "200", description = "Objective updated",
                 content = [Content(mediaType = "application/json", schema = Schema(implementation = ObjectiveResponseDto::class))]),
             ApiResponse(responseCode = "400", description = "Objective dto validation failed",
                 content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.BAD_REQUEST_ERROR))]),
@@ -108,5 +115,26 @@ interface ObjectiveController {
         ]
     )
     @PutMapping("/{id}")
-    fun updateObjective(@PathVariable("id") objectiveId: UUID, @RequestBody @Valid objective: ObjectiveRequestDto): ObjectiveResponseDto
+    fun updateObjective(
+        @Parameter(name = "id", `in` = ParameterIn.PATH)
+        @PathVariable("id") objectiveId: UUID,
+
+        @RequestBody @Valid objective: ObjectiveRequestDto): ObjectiveResponseDto
+
+    @Operation(
+        summary = "Delete an objective",
+        description = "Delete an objective"
+    )
+    @ApiResponses(
+        value = [
+
+            ApiResponse(responseCode = "200", description = "Objective deleted"),
+            ApiResponse(responseCode = "500", description = "Internal Server Error",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = GenericErrorDto::class, example = OpenApiUtils.ResponseDtoExamples.INTERNAL_SERVER_ERROR))])
+        ]
+    )
+    @DeleteMapping("/{id}")
+    fun deleteObjective(
+        @Parameter(name = "id", `in` = ParameterIn.PATH)
+        @PathVariable("id") objectiveId: UUID)
 }

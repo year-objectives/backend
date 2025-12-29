@@ -47,6 +47,9 @@ class AccomplishmentService(
         val accomplishment = repository.findByResourceId(accomplishmentId)
             ?: throw ResourceNotFoundException("Accomplishment with id $accomplishmentId not found")
 
+        if(!accomplishment.objective.reversible && accomplishment.done != accomplishmentDto.done)
+            throw UnsupportedOperationException("Can't update done state of irreversible objective")
+
         val doneAt = if(accomplishment.done) accomplishmentDto.doneAt else null
         accomplishment.doneAt = doneAt
         accomplishment.done = accomplishmentDto.done

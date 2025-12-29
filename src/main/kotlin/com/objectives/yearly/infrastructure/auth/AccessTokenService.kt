@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import java.util.*
 import javax.crypto.SecretKey
@@ -22,11 +21,16 @@ class AccessTokenService(private val userDetailsService: CustomUserDetailsServic
         Keys.hmacShaKeyFor(secret.toByteArray())
     }
     
-    fun generateToken(userId: UUID): String {
-        return Jwts.builder()
+    fun generateToken(userId: UUID, expirationTime: Long = -1): String {
+        val jwtbuilder = Jwts.builder()
             .subject(userId.toString())
             .issuedAt(Date())
-            .expiration(Date(System.currentTimeMillis() + accessExpiration))
+        if (expirationTime >= 0) {
+            jwtbuilder.expiration(Date(System.currentTimeMillis() + expirationTime))
+        } else {
+            jwtbuilder.expiration(Date(System.currentTimeMillis() + accessExpiration))
+        }
+        return jwtbuilder
             .signWith(key)
             .compact()
     }
@@ -35,7 +39,7 @@ class AccessTokenService(private val userDetailsService: CustomUserDetailsServic
         return !isTokenExpired(token)
     }
 
-    fun getUserId(token: String): String? {
+    fun getTokenSubject(token: String): String? {
         return extractClaims(token)?.subject
     }
     

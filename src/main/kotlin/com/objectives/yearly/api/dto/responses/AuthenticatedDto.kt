@@ -13,5 +13,5 @@ data class AuthenticatedDto(
     @field:Schema(description = "Low duration authentication token")
     val authToken: String,
 
-    @field:Schema(description = "Refresh token id")
-    val refreshTokenId: String)
+    @field:Schema(description = "Refresh token")
+    val refreshToken: String)

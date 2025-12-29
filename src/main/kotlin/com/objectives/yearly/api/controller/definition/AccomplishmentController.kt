@@ -6,6 +6,8 @@ import com.objectives.yearly.api.dto.responses.AccomplishmentResponseDto
 import com.objectives.yearly.api.dto.responses.GenericErrorDto
 import com.objectives.yearly.api.dto.utils.OpenApiUtils
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.enums.ParameterIn
 import io.swagger.v3.oas.annotations.media.ArraySchema
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -59,7 +61,10 @@ interface AccomplishmentController {
         ]
     )
     @GetMapping("/current")
-    fun getCurrentByObjective(@RequestParam objectiveId: UUID): List<AccomplishmentResponseDto>
+    fun getCurrentByObjective(
+        @RequestParam(value = "objective_id", required = true)
+        @Parameter(name = "objective_id", `in` = ParameterIn.QUERY, required = true)
+        objectiveId: UUID): List<AccomplishmentResponseDto>
 
     @Operation(
         summary = "Update accomplishment by id",
@@ -80,5 +85,7 @@ interface AccomplishmentController {
         ]
     )
     @PutMapping("/{id}")
-    fun updateAccomplishment(@PathVariable("id") accomplishmentId: UUID, @RequestBody @Valid accomplishment: AccomplishmentRequestDto): AccomplishmentResponseDto
+    fun updateAccomplishment(
+        @Parameter(name = "id", `in` = ParameterIn.PATH)
+        @PathVariable("id") accomplishmentId: UUID, @RequestBody @Valid accomplishment: AccomplishmentRequestDto): AccomplishmentResponseDto
 }

@@ -21,7 +21,11 @@ class TagService(
     fun registerNew(requestDto: TagRequestDto): TagResponseDto {
         val currentUser = userService.getCurrentUser()
 
+        if(repository.existsByNameAndUserResourceId(requestDto.name, currentUser.resourceId))
+            throw UnsupportedOperationException("User already has a tag with this name")
+
         val tag = mapper.toModel(requestDto, currentUser)
+
         val savedTag = repository.save(tag)
         return mapper.toApi(savedTag)
     }

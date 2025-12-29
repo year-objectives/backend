@@ -11,7 +11,7 @@
           "v": "17",
           "name": "Register",
           "method": "POST",
-          "endpoint": "http://localhost:8080/api/v1/auth/register",
+          "endpoint": "http://localhost:8080/api/v1/authentication/register",
           "params": [],
           "headers": [],
           "preRequestScript": "",
@@ -22,7 +22,7 @@
           },
           "body": {
             "contentType": "application/json",
-            "body": "{\n  \"username\": \"mami322\",\n  \"first_name\": \"maria\",\n  \"last_name\": \"almeida\",\n  \"email\": \"email3@domain.com\",\n  \"password\": \"amorzin12345\"\n}"
+            "body": "{\n  \"username\": \"mami\",\n  \"first_name\": \"jane\",\n  \"last_name\": \"doe\",\n  \"email\": \"email3@domain.com\",\n  \"password\": \"love123456\"\n}"
           },
           "requestVariables": [],
           "responses": {},
@@ -32,7 +32,7 @@
           "v": "17",
           "name": "Login",
           "method": "POST",
-          "endpoint": "http://localhost:8080/api/v1/auth/login",
+          "endpoint": "http://localhost:8080/api/v1/authentication/login",
           "params": [],
           "headers": [],
           "preRequestScript": "",
@@ -43,7 +43,28 @@
           },
           "body": {
             "contentType": "application/json",
-            "body": "{\n  \"username\": \"mami322\",\n  \"password\": \"amorzin78910\"\n}"
+            "body": "{\n  \"username\": \"mami\",\n  \"password\": \"love123456\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Refresh",
+          "method": "POST",
+          "endpoint": "http://localhost:8080/api/v1/authentication/refresh-token",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"refresh_token\": \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2YWUxOWM4Ny04NzkwLTRkNTgtYmM1YS0xY2VjNGNjYzcxZTEiLCJpYXQiOjE3NjcwMjE5OTQsImV4cCI6MTc2OTYxMzk5NH0.ym0vlpARgCYbgyZzmMXiyXHPbqTEVD3SqSKdfeCTIOtLrEbsQUUMHnPHccVsSVlueCBK89iYzT_uwM5CIP_Mhw\"\n}"
           },
           "requestVariables": [],
           "responses": {},
@@ -65,65 +86,7 @@
           },
           "body": {
             "contentType": "application/json",
-            "body": "{\n  \"refresh_token_id\": \"45568403-2291-46dc-9c3f-63dcc7f2b1ea\"\n}"
-          },
-          "requestVariables": [],
-          "responses": {},
-          "description": null
-        },
-        {
-          "v": "17",
-          "name": "Refresh",
-          "method": "POST",
-          "endpoint": "http://localhost:8080/api/v1/auth/refresh-token",
-          "params": [],
-          "headers": [],
-          "preRequestScript": "",
-          "testScript": "",
-          "auth": {
-            "authType": "none",
-            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4OTczNzViZC1jMDBmLTQwNjYtYmY3OS00YjcwZGU5Y2QwN2IiLCJpYXQiOjE3NjY1MjA2NDIsImV4cCI6MTc2NjUyMjQ0Mn0.jBwLUxDEmssqMMce3I6f7mXdIf3L4yIk-4Hq9iT5YXj26_ejuBK0IodQNC2eEgzndfK7W-XWko8Ca4dqFfxYbg",
-            "authActive": true
-          },
-          "body": {
-            "contentType": "application/json",
-            "body": "{\n  \"refresh_token_id\": \"45568403-2291-46dc-9c3f-63dcc7f2b1ea\"\n}"
-          },
-          "requestVariables": [],
-          "responses": {},
-          "description": null
-        }
-      ],
-      "auth": {
-        "authType": "inherit",
-        "authActive": true
-      },
-      "headers": [],
-      "variables": [],
-      "description": null
-    },
-    {
-      "v": 11,
-      "name": "Objectives",
-      "folders": [],
-      "requests": [
-        {
-          "v": "17",
-          "name": "Get All",
-          "method": "GET",
-          "endpoint": "http://localhost:8080/api/v1/objectives",
-          "params": [],
-          "headers": [],
-          "preRequestScript": "",
-          "testScript": "",
-          "auth": {
-            "authType": "bearer",
-            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4OTczNzViZC1jMDBmLTQwNjYtYmY3OS00YjcwZGU5Y2QwN2IiLCJpYXQiOjE3NjY1MjExNjMsImV4cCI6MTc2NjUyMjk2M30.LB3DNOGa7xY0N96xLa6HWkLSDp0ILXreReMG_f4VsAPOdTO5N58acP7cm8Wus6rPueLvGKatcPyuuO9XWgQ2MQ",
-            "authActive": true
-          },
-          "body": {
-            "contentType": "application/json",
-            "body": ""
+            "body": "{\n  \"refresh_token\": \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjZTQwMzNiMi0xMzdlLTRlNjAtOWQ5ZS01ZTcxOTIzMmY0YzUiLCJpYXQiOjE3NjcwMjM1MjQsImV4cCI6MTc2OTYxNTUyNH0.tLP6tgHI_TCkzbz-NuHXJ5fw2jdgVYPaEfbW64Avf2fJuQs2gT5WkOQCHmcCZzDUTd9NDuP_zIXpofbIY9feng\"\n}"
           },
           "requestVariables": [],
           "responses": {},
@@ -145,21 +108,21 @@
       "requests": [
         {
           "v": "17",
-          "name": "Change Password",
-          "method": "POST",
-          "endpoint": "http://localhost:8080/api/v1/users/password",
+          "name": "Get details ",
+          "method": "GET",
+          "endpoint": "http://localhost:8080/api/v1/users/details",
           "params": [],
           "headers": [],
           "preRequestScript": "",
           "testScript": "",
           "auth": {
             "authType": "bearer",
-            "authActive": true,
-            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4OTczNzViZC1jMDBmLTQwNjYtYmY3OS00YjcwZGU5Y2QwN2IiLCJpYXQiOjE3NjY1MjE0NjEsImV4cCI6MTc2NjUyMzI2MX0.8YjH8O26AqTagEf1BZNM0vVkPfR-mKp__vsdxylBB-SGm8veSYkpIB8Aov1zN7YP7zAV2PpA_ynqrsaiF6QH0A"
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2YTUzYjgyNi04ZGEyLTRmZjAtODE5My1jMjY4YjEwODc4NTgiLCJpYXQiOjE3NjcwMjE5OTQsImV4cCI6MTc2NzAyMzc5NH0.8ieY92Vjtf2LVdX7vi7xebp5zGBQxB2YX59Dz8Ss_GgFEdvSaI9hTbSqB67kViAhWCg0mam8pdkROibf_Baadg",
+            "authActive": true
           },
           "body": {
-            "contentType": "application/json",
-            "body": "{\n  \"username\": \"mami322\",\n  \"password\": \"amorzin78910\"\n}"
+            "contentType": null,
+            "body": null
           },
           "requestVariables": [],
           "responses": {},
@@ -176,8 +139,8 @@
           "testScript": "",
           "auth": {
             "authType": "bearer",
-            "authActive": true,
-            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4OTczNzViZC1jMDBmLTQwNjYtYmY3OS00YjcwZGU5Y2QwN2IiLCJpYXQiOjE3NjY1MjE1NDAsImV4cCI6MTc2NjUyMzM0MH0.qrKTDprmMi-Gx6lIQJuoLZiUdIgfcVPmYZMdTAn8dHQU5DLr0OmgzL0EffL6P7j-VO2dArfACVHS6tvUMqyeHg"
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4OTczNzViZC1jMDBmLTQwNjYtYmY3OS00YjcwZGU5Y2QwN2IiLCJpYXQiOjE3NjY1MjE1NDAsImV4cCI6MTc2NjUyMzM0MH0.qrKTDprmMi-Gx6lIQJuoLZiUdIgfcVPmYZMdTAn8dHQU5DLr0OmgzL0EffL6P7j-VO2dArfACVHS6tvUMqyeHg",
+            "authActive": true
           },
           "body": {
             "contentType": "application/json",
@@ -189,21 +152,261 @@
         },
         {
           "v": "17",
-          "name": "Get details ",
-          "method": "GET",
-          "endpoint": "http://localhost:8080/api/v1/users/details",
+          "name": "Change Password",
+          "method": "PUT",
+          "endpoint": "http://localhost:8080/api/v1/users/password",
           "params": [],
           "headers": [],
           "preRequestScript": "",
           "testScript": "",
           "auth": {
             "authType": "bearer",
-            "authActive": true,
-            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4OTczNzViZC1jMDBmLTQwNjYtYmY3OS00YjcwZGU5Y2QwN2IiLCJpYXQiOjE3NjY1MjE0NjEsImV4cCI6MTc2NjUyMzI2MX0.8YjH8O26AqTagEf1BZNM0vVkPfR-mKp__vsdxylBB-SGm8veSYkpIB8Aov1zN7YP7zAV2PpA_ynqrsaiF6QH0A"
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2YTUzYjgyNi04ZGEyLTRmZjAtODE5My1jMjY4YjEwODc4NTgiLCJpYXQiOjE3NjcwMjE5OTQsImV4cCI6MTc2NzAyMzc5NH0.8ieY92Vjtf2LVdX7vi7xebp5zGBQxB2YX59Dz8Ss_GgFEdvSaI9hTbSqB67kViAhWCg0mam8pdkROibf_Baadg",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"password\": \"love123456\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "description": null
+    },
+    {
+      "v": 11,
+      "name": "Tags",
+      "folders": [],
+      "requests": [
+        {
+          "v": "17",
+          "name": "Create",
+          "method": "POST",
+          "endpoint": "http://localhost:8080/api/v1/tags",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MWU0NTI5ZC01Njk3LTQ1OGYtOTA4Mi00YzA2MDA3NjRjZGYiLCJpYXQiOjE3NjcwMjY1MjgsImV4cCI6MTc2NzAyODMyOH0.KyCcJ3mvKNHo5RmX1-s73AYS5yKvqMRnSaxlqHe1AkvgcG0Z7wGZDjOUiA9-dZRQ91PdNgFXsKlqEHTLnyQHdA",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"exercise\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Get all",
+          "method": "GET",
+          "endpoint": "http://localhost:8080/api/v1/tags",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MWU0NTI5ZC01Njk3LTQ1OGYtOTA4Mi00YzA2MDA3NjRjZGYiLCJpYXQiOjE3NjcwMjY1MjgsImV4cCI6MTc2NzAyODMyOH0.KyCcJ3mvKNHo5RmX1-s73AYS5yKvqMRnSaxlqHe1AkvgcG0Z7wGZDjOUiA9-dZRQ91PdNgFXsKlqEHTLnyQHdA",
+            "authActive": true
           },
           "body": {
             "contentType": null,
             "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "description": null
+    },
+    {
+      "v": 11,
+      "name": "Objectives",
+      "folders": [],
+      "requests": [
+        {
+          "v": "17",
+          "name": "Create",
+          "method": "POST",
+          "endpoint": "http://localhost:8080/api/v1/objectives",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MWU0NTI5ZC01Njk3LTQ1OGYtOTA4Mi00YzA2MDA3NjRjZGYiLCJpYXQiOjE3NjcwMjY1MjgsImV4cCI6MTc2NzAyODMyOH0.KyCcJ3mvKNHo5RmX1-s73AYS5yKvqMRnSaxlqHe1AkvgcG0Z7wGZDjOUiA9-dZRQ91PdNgFXsKlqEHTLnyQHdA",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Climbing\",\n  \"target_amount\": 1,\n  \"type\": \"WEEKLY\",\n  \"reversible\": false,\n  \"description\": \"Xuperbock\",\n  \"tags\": [\"47fa9074-07ca-430b-8a43-3c989d1cee08\"]\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Get All",
+          "method": "GET",
+          "endpoint": "http://localhost:8080/api/v1/objectives?type=WEEKLY",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MWU0NTI5ZC01Njk3LTQ1OGYtOTA4Mi00YzA2MDA3NjRjZGYiLCJpYXQiOjE3NjcwMjY1MjgsImV4cCI6MTc2NzAyODMyOH0.KyCcJ3mvKNHo5RmX1-s73AYS5yKvqMRnSaxlqHe1AkvgcG0Z7wGZDjOUiA9-dZRQ91PdNgFXsKlqEHTLnyQHdA",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": ""
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Update",
+          "method": "PUT",
+          "endpoint": "http://localhost:8080/api/v1/objectives/70f8ecc2-995b-4db0-9aff-f6ba6ce0aa29",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MWU0NTI5ZC01Njk3LTQ1OGYtOTA4Mi00YzA2MDA3NjRjZGYiLCJpYXQiOjE3NjcwMjY1MjgsImV4cCI6MTc2NzAyODMyOH0.KyCcJ3mvKNHo5RmX1-s73AYS5yKvqMRnSaxlqHe1AkvgcG0Z7wGZDjOUiA9-dZRQ91PdNgFXsKlqEHTLnyQHdA",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"name\": \"Going to gym\",\n  \"target_amount\": 3,\n  \"type\": \"WEEKLY\",\n  \"reversible\": false,\n  \"description\": \"I want to be strong\",\n  \"tags\": [\"47fa9074-07ca-430b-8a43-3c989d1cee08\"]\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Soft delete",
+          "method": "DELETE",
+          "endpoint": "http://localhost:8080/api/v1/objectives/70f8ecc2-995b-4db0-9aff-f6ba6ce0aa29",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "bearer",
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MWU0NTI5ZC01Njk3LTQ1OGYtOTA4Mi00YzA2MDA3NjRjZGYiLCJpYXQiOjE3NjcwMjY1MjgsImV4cCI6MTc2NzAyODMyOH0.KyCcJ3mvKNHo5RmX1-s73AYS5yKvqMRnSaxlqHe1AkvgcG0Z7wGZDjOUiA9-dZRQ91PdNgFXsKlqEHTLnyQHdA",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "description": null
+    },
+    {
+      "v": 11,
+      "name": "Accomplishments",
+      "folders": [],
+      "requests": [
+        {
+          "v": "17",
+          "endpoint": "http://localhost:8080/api/v1/accomplishments",
+          "name": "Create",
+          "params": [],
+          "headers": [],
+          "method": "POST",
+          "auth": {
+            "authType": "bearer",
+            "authActive": true,
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MWU0NTI5ZC01Njk3LTQ1OGYtOTA4Mi00YzA2MDA3NjRjZGYiLCJpYXQiOjE3NjcwMjY1MjgsImV4cCI6MTc2NzAyODMyOH0.KyCcJ3mvKNHo5RmX1-s73AYS5yKvqMRnSaxlqHe1AkvgcG0Z7wGZDjOUiA9-dZRQ91PdNgFXsKlqEHTLnyQHdA"
+          },
+          "preRequestScript": "",
+          "testScript": "",
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"objective_id\": \"77b17e9b-54fe-4ea8-a19d-4d7f4d0e01a5\",\n  \"done\": true,\n  \"done_at\": 1767027116000,\n  \"description\": \"I went earlier today\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "endpoint": "http://localhost:8080/api/v1/accomplishments/current?objective_id=77b17e9b-54fe-4ea8-a19d-4d7f4d0e01a5",
+          "name": "Get current",
+          "params": [],
+          "headers": [],
+          "method": "GET",
+          "auth": {
+            "authType": "bearer",
+            "authActive": true,
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MWU0NTI5ZC01Njk3LTQ1OGYtOTA4Mi00YzA2MDA3NjRjZGYiLCJpYXQiOjE3NjcwMzEzNjYsImV4cCI6MTc2NzAzMzE2Nn0.i7fugXAd1CwlJeH8qgJjVxCkEiioms967VjKouxjBbjLDMXbZqqVzcYh1bymvxM_8a8V2FyKPR7jPPY4jt0pDQ"
+          },
+          "preRequestScript": "",
+          "testScript": "",
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "endpoint": "http://localhost:8080/api/v1/accomplishments/d74c66d4-2cab-431d-a59e-fda51a7edcb2",
+          "name": "Get current - Duplicate",
+          "params": [],
+          "headers": [],
+          "method": "PUT",
+          "auth": {
+            "authType": "bearer",
+            "authActive": true,
+            "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MWU0NTI5ZC01Njk3LTQ1OGYtOTA4Mi00YzA2MDA3NjRjZGYiLCJpYXQiOjE3NjcwMzEzNjYsImV4cCI6MTc2NzAzMzE2Nn0.i7fugXAd1CwlJeH8qgJjVxCkEiioms967VjKouxjBbjLDMXbZqqVzcYh1bymvxM_8a8V2FyKPR7jPPY4jt0pDQ"
+          },
+          "preRequestScript": "",
+          "testScript": "",
+          "body": {
+            "contentType": "application/json",
+            "body": "  {\n    \"objective_id\": \"77b17e9b-54fe-4ea8-a19d-4d7f4d0e01a5\",\n    \"done_at\": 1767027116000,\n    \"done\": false\n  }"
           },
           "requestVariables": [],
           "responses": {},

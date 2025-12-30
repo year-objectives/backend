@@ -8,7 +8,7 @@ plugins {
 
 group = "com.objectives"
 version = "0.0.1-SNAPSHOT"
-description = "Yealy objectives API"
+description = "Yearly objectives API"
 
 java {
 	toolchain {
@@ -46,7 +46,7 @@ dependencies {
 
 	// Open Api
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.14")
-//	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0")
+
 	/* =========================
 	 * Testing tools
 	 * ========================= */

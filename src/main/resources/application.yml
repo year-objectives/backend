@@ -3,7 +3,7 @@ spring:
     property-naming-strategy: SNAKE_CASE
     default-property-inclusion: non_null
   application:
-    name: yearly-persist
+    name: manager
   datasource:
     url: jdbc:postgresql://localhost:5432/year_objectives
     username: maria

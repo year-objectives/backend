@@ -1,7 +1,7 @@
 services:
   database:
     image: postgres:14.7
-    container_name: objectives-database
+    container_name: objectives-manager-database
     environment:
       - POSTGRES_USER=maria
       - POSTGRES_PASSWORD=password
@@ -11,20 +11,20 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - objective-backend
+      - objectives-manager
   redis:
     image: redis:8-alpine
-    container_name: objectives-cache
+    container_name: objectives-managercache
     ports:
       - "6379:6379"
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
     networks:
-      - objective-backend
+      - objectives-manager
   liquibase:
     image: liquibase/liquibase:4.27.0
-    container_name: objectives-liquibase
+    container_name: objectives-managerliquibase
     depends_on:
       - database
     restart: "no"
@@ -38,12 +38,12 @@ services:
       - --password=password
       - update
     networks:
-      - objective-backend
+      - objectives-manager
 
 
 networks:
-  objective-backend:
-    name: objective-backend
+  objectives-manager:
+    name: objectives-manager
 volumes:
   postgres_data:
   redis_data:
